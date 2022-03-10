@@ -3,7 +3,8 @@ use "Glfw3"
 class CustomCallbacks is Callbacks
   fun @keyCallback(window: NullablePointer[GLFWwindow] tag, key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
     match key
-    | 256 => Glfw3.glfwSetWindowShouldClose(window, 1)
+    | GLFWkey.escape()
+    | GLFWkey.letter_q() => Glfw3.glfwSetWindowShouldClose(window, 1)
     end
     try
       let data = Glfw3.glfwGetWindowUserPointer(window) as WindowUserNotify

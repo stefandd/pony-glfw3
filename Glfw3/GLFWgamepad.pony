@@ -1,0 +1,27 @@
+primitive GLFWgamepad
+  fun button_a(): I64 => 0
+  fun button_b(): I64 => 1
+  fun button_x(): I64 => 2
+  fun button_y(): I64 => 3
+  fun button_left_bumper(): I64 => 4
+  fun button_right_bumper(): I64 => 5
+  fun button_back(): I64 => 6
+  fun button_start(): I64 => 7
+  fun button_guide(): I64 => 8
+  fun button_left_thumb(): I64 => 9
+  fun button_right_thumb(): I64 => 10
+  fun button_dpad_up(): I64 => 11
+  fun button_dpad_right(): I64 => 12
+  fun button_dpad_down(): I64 => 13
+  fun button_dpad_left(): I64 => 14
+  fun button_last(): I64 => button_dpad_left()
+  fun button_cross(): I64 => button_a()
+  fun button_circle(): I64 => button_b()
+  fun button_square(): I64 => button_x()
+  fun button_triangle(): I64 => button_y()
+  fun axis_left_x(): I64 => 0
+  fun axis_left_y(): I64 => 1
+  fun axis_right_x(): I64 => 2
+  fun axis_right_y(): I64 => 3
+  fun axis_left_trigger(): I64 => 4
+  fun axis_right_trigger(): I64 => 5
