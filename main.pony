@@ -5,13 +5,25 @@ class CustomCallbacks is Callbacks
     match key
     | 256 => Glfw3.glfwSetWindowShouldClose(window, 1)
     end
+    try
+      let data = Glfw3.glfwGetWindowUserPointer(window) as WindowUserNotify
+      data.env.out.print("key: " + key.string())
+    end
+
+class WindowUserNotify is Notify
+  let env: Env
+
+  new create(env': Env) =>
+    env = env'
 
 actor Main
   let window: NullablePointer[GLFWwindow]
   let custom_callbacks: CustomCallbacks
+  let window_user_notify: WindowUserNotify
 
   new create(env: Env) =>
     custom_callbacks = CustomCallbacks
+    window_user_notify = WindowUserNotify(env)
 
     env.out.print("Hello Glfw3")
 
@@ -19,6 +31,7 @@ actor Main
 
     window = Glfw3.glfwCreateWindow(640, 480, "My Title", NullablePointer[GLFWmonitor].none(), NullablePointer[GLFWwindow].none())
     Glfw3.glfwSetKeyCallback(window, custom_callbacks)
+    Glfw3.glfwSetWindowUserPointer(window, window_user_notify)
     loop()
 
 

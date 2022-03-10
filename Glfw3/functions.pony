@@ -7417,8 +7417,8 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FundamentalType(void) size=0]
 */
-  fun glfwSetWindowUserPointer(window: NullablePointer[GLFWwindow] tag, pointer: Pointer[None] tag): None =>
-    @glfwSetWindowUserPointer(window, pointer)
+  fun glfwSetWindowUserPointer(window: NullablePointer[GLFWwindow] tag, notify: Notify tag): None =>
+    @glfwSetWindowUserPointer(window, notify)
 
 
 /*
@@ -7430,7 +7430,7 @@ primitive Glfw3
   Arguments:
     [PointerType size=64]->[Struct size=,fid: f10]
 */
-  fun glfwGetWindowUserPointer(window: NullablePointer[GLFWwindow] tag): Pointer[None] =>
+  fun glfwGetWindowUserPointer(window: NullablePointer[GLFWwindow] tag): Notify =>
     @glfwGetWindowUserPointer(window)
 
 
