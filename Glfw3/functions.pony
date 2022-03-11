@@ -6749,8 +6749,8 @@ primitive Glfw3
   Arguments:
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetErrorCallback(callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetErrorCallback(addressof callbacks.errorCallback)
+  fun glfwSetErrorCallback(callback: Pointer[None] tag): Pointer[None] =>
+    @glfwSetErrorCallback(callback)
 
 
 /*
@@ -6891,8 +6891,8 @@ primitive Glfw3
   Arguments:
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetMonitorCallback(callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetMonitorCallback(addressof callbacks.monitorCallback)
+  fun glfwSetMonitorCallback(callback: Pointer[None] tag): Pointer[None] =>
+    @glfwSetMonitorCallback(callback)
 
 
 /*
@@ -7016,8 +7016,10 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[Struct size=,fid: f10]
 */
-  fun glfwCreateWindow(width: I32, height: I32, title: String, monitor: NullablePointer[GLFWmonitor] tag, share: NullablePointer[GLFWwindow] tag): NullablePointer[GLFWwindow] =>
-    @glfwCreateWindow(width, height, title.cstring(), monitor, share)
+  fun glfwCreateWindow(width: I32, height: I32, title: String, monitor: NullablePointer[GLFWmonitor] tag, share: NullablePointer[GLFWwindow] tag, listener: WindowCallbackListener tag): NullablePointer[GLFWwindow] =>
+    let window = @glfwCreateWindow(width, height, title.cstring(), monitor, share)
+    @glfwSetWindowUserPointer(window, listener)
+    window
 
 
 /*
@@ -7408,33 +7410,6 @@ primitive Glfw3
 
 
 /*
-  Source: /nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3582
-  Original Name: glfwSetWindowUserPointer/nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3582
-
-  Return Value: [FundamentalType(void) size=0]
-
-  Arguments:
-    [PointerType size=64]->[Struct size=,fid: f10]
-    [PointerType size=64]->[FundamentalType(void) size=0]
-*/
-  fun glfwSetWindowUserPointer(window: NullablePointer[GLFWwindow] tag, notify: Notify tag): None =>
-    @glfwSetWindowUserPointer(window, notify)
-
-
-/*
-  Source: /nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3603
-  Original Name: glfwGetWindowUserPointer/nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3603
-
-  Return Value: [PointerType size=64]->[FundamentalType(void) size=0]
-
-  Arguments:
-    [PointerType size=64]->[Struct size=,fid: f10]
-*/
-  fun glfwGetWindowUserPointer(window: NullablePointer[GLFWwindow] tag): Notify =>
-    @glfwGetWindowUserPointer(window)
-
-
-/*
   Source: /nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3638
   Original Name: glfwSetWindowPosCallback/nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3638
 
@@ -7444,8 +7419,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowPosCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowPosCallback(window, addressof callbacks.windowPosCallback)
+  fun glfwEnableWindowPosCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowPosCallback(window, addressof _windowPosCallback)
+
+  fun @_windowPosCallback(window: NullablePointer[GLFWwindow] tag, xpos: I64 val, ypos: I64 val) =>
+    @glfwGetWindowUserPointer(window).windowPosCallback(window, xpos, ypos)
 
 
 /*
@@ -7458,8 +7436,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowSizeCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowSizeCallback(window, addressof callbacks.windowSizeCallback)
+  fun glfwEnableWindowSizeCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowSizeCallback(window, addressof _windowSizeCallback)
+
+  fun @_windowSizeCallback(window: NullablePointer[GLFWwindow] tag, width: I64 val, height: I64 val) =>
+    @glfwGetWindowUserPointer(window).windowSizeCallback(window, width, height)
 
 
 /*
@@ -7472,8 +7453,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowCloseCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowCloseCallback(window, addressof callbacks.windowCloseCallback)
+  fun glfwEnableWindowCloseCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowCloseCallback(window, addressof _windowCloseCallback)
+
+  fun @_windowCloseCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwGetWindowUserPointer(window).windowCloseCallback(window)
 
 
 /*
@@ -7486,8 +7470,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowRefreshCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowRefreshCallback(window, addressof callbacks.windowRefreshCallback)
+  fun glfwEnableWindowRefreshCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowRefreshCallback(window, addressof _windowRefreshCallback)
+
+  fun @_windowRefreshCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwGetWindowUserPointer(window).windowRefreshCallback(window)
 
 
 /*
@@ -7500,8 +7487,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowFocusCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowFocusCallback(window, addressof callbacks.windowFocusCallback)
+  fun glfwEnableWindowFocusCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowFocusCallback(window, addressof _windowFocusCallback)
+
+  fun @_windowFocusCallback(window: NullablePointer[GLFWwindow] tag, focused: I64) =>
+    @glfwGetWindowUserPointer(window).windowFocusCallback(window, focused)
 
 
 /*
@@ -7514,8 +7504,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowIconifyCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowIconifyCallback(window, addressof callbacks.windowIconifyCallback)
+  fun glfwEnableWindowIconifyCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowIconifyCallback(window, addressof _windowIconifyCallback)
+
+  fun @_windowIconifyCallback(window: NullablePointer[GLFWwindow] tag, iconified: I64) =>
+    @glfwGetWindowUserPointer(window).windowIconifyCallback(window, iconified)
 
 
 /*
@@ -7528,8 +7521,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowMaximizeCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowMaximizeCallback(window, addressof callbacks.windowMaximizeCallback)
+  fun glfwEnableWindowMaximizeCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowMaximizeCallback(window, addressof _windowMaximizeCallback)
+
+  fun @_windowMaximizeCallback(window: NullablePointer[GLFWwindow] tag, maximized: I64) =>
+    @glfwGetWindowUserPointer(window).windowMaximizeCallback(window, maximized)
 
 
 /*
@@ -7542,8 +7538,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetFramebufferSizeCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetFramebufferSizeCallback(window, addressof callbacks.framebufferSizeCallback)
+  fun glfwEnableFramebufferSizeCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetFramebufferSizeCallback(window, addressof _framebufferSizeCallback)
+
+  fun @_framebufferSizeCallback(window: NullablePointer[GLFWwindow] tag, width: I64, height: I64) =>
+    @glfwGetWindowUserPointer(window).framebufferSizeCallback(window, width, height)
 
 
 /*
@@ -7556,8 +7555,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetWindowContentScaleCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetWindowContentScaleCallback(window, addressof callbacks.windowContentScaleCallback)
+  fun glfwEnableWindowContentScaleCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetWindowContentScaleCallback(window, addressof _windowContentScaleCallback)
+
+  fun @_windowContentScaleCallback(window: NullablePointer[GLFWwindow] tag, xscale: F64, yscale: F64) =>
+    @glfwGetWindowUserPointer(window).windowContentScaleCallback(window, xscale, yscale)
 
 
 /*
@@ -7802,8 +7804,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetKeyCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetKeyCallback(window, addressof callbacks.keyCallback)
+  fun glfwEnableKeyCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetKeyCallback(window, addressof _keyCallback)
+
+  fun @_keyCallback(window: NullablePointer[GLFWwindow] tag, key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
+      @glfwGetWindowUserPointer(window).keyCallback(window, key, scancode, action, mods)
 
 
 /*
@@ -7816,8 +7821,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetCharCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetCharCallback(window, addressof callbacks.charCallback)
+  fun glfwEnableCharCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetCharCallback(window, addressof _charCallback)
+
+  fun @_charCallback(window: NullablePointer[GLFWwindow] tag, codepoint: U64) =>
+    @glfwGetWindowUserPointer(window).charCallback(window, codepoint)
 
 
 /*
@@ -7830,8 +7838,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetCharModsCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetCharModsCallback(window, addressof callbacks.charModsCallback)
+  fun glfwEnableCharModsCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetCharModsCallback(window, addressof _charModsCallback)
+
+  fun @_charModsCallback(window: NullablePointer[GLFWwindow] tag, codepoint: U64, mods: I64) =>
+    @glfwGetWindowUserPointer(window).charModsCallback(window, codepoint, mods)
 
 
 /*
@@ -7844,8 +7855,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetMouseButtonCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetMouseButtonCallback(window, addressof callbacks.mouseButtonCallback)
+  fun glfwEnableMouseButtonCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetMouseButtonCallback(window, addressof _mouseButtonCallback)
+
+  fun @_mouseButtonCallback(window: NullablePointer[GLFWwindow] tag, button: I64, action: I64, mods: I64) =>
+    @glfwGetWindowUserPointer(window).mouseButtonCallback(window, button, action, mods)
 
 
 /*
@@ -7858,8 +7872,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetCursorPosCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetCursorPosCallback(window, addressof callbacks.cursorPosCallback)
+  fun glfwEnableCursorPosCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetCursorPosCallback(window, addressof _cursorPosCallback)
+
+  fun @_cursorPosCallback(window: NullablePointer[GLFWwindow] tag, xpos: F64, ypos: F64) =>
+    @glfwGetWindowUserPointer(window).cursorPosCallback(window, xpos, ypos)
 
 
 /*
@@ -7872,8 +7889,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetCursorEnterCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetCursorEnterCallback(window, addressof callbacks.cursorEnterCallback)
+  fun glfwEnableCursorEnterCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetCursorEnterCallback(window, addressof _cursorEnterCallback)
+
+  fun @_cursorEnterCallback(window: NullablePointer[GLFWwindow] tag, entered: I64) =>
+    @glfwGetWindowUserPointer(window).cursorEnterCallback(window, entered)
 
 
 /*
@@ -7886,8 +7906,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetScrollCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetScrollCallback(window, addressof callbacks.scrollCallback)
+  fun glfwEnableScrollCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetScrollCallback(window, addressof _scrollCallback)
+
+  fun @_scrollCallback(window: NullablePointer[GLFWwindow] tag, xoffset: F64, yoffset: F64) =>
+    @glfwGetWindowUserPointer(window).scrollCallback(window, xoffset, yoffset)
 
 
 /*
@@ -7900,8 +7923,11 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetDropCallback(window: NullablePointer[GLFWwindow] tag, callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetDropCallback(window, addressof callbacks.dropCallback)
+  fun glfwEnableDropCallback(window: NullablePointer[GLFWwindow] tag) =>
+    @glfwSetDropCallback(window, addressof _dropCallback)
+
+  fun @_dropCallback(window: NullablePointer[GLFWwindow] tag, path_count: I64, paths: Pointer[U8]) =>
+    @glfwGetWindowUserPointer(window).dropCallback(window, path_count, String.from_cstring(paths).clone())
 
 
 /*
@@ -8042,8 +8068,11 @@ primitive Glfw3
   Arguments:
     [PointerType size=64]->[FunctionType]  WRITE MANUALLY
 */
-  fun glfwSetJoystickCallback(callbacks: Callbacks tag): Pointer[None] =>
-    @glfwSetJoystickCallback(addressof callbacks.joystickCallback)
+  fun glfwEnableJoystickCallback() =>
+    @glfwSetJoystickCallback(addressof _joystickCallback)
+
+  fun @_joystickCallback(window: NullablePointer[GLFWwindow] tag, jid: I64, event: I64) =>
+    @glfwGetWindowUserPointer(window).joystickCallback(window, jid, event)
 
 
 /*

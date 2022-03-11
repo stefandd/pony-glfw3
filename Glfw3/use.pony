@@ -7410,7 +7410,7 @@ use @glfwSetWindowAttrib[None](window: NullablePointer[GLFWwindow] tag, attrib: 
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[FundamentalType(void) size=0]
 */
-use @glfwSetWindowUserPointer[None](window: NullablePointer[GLFWwindow] tag, notify: Notify tag)
+use @glfwSetWindowUserPointer[None](window: NullablePointer[GLFWwindow] tag, listener: WindowCallbackListener tag)
 
 
 
@@ -7423,7 +7423,7 @@ use @glfwSetWindowUserPointer[None](window: NullablePointer[GLFWwindow] tag, not
   Arguments:
     [PointerType size=64]->[Struct size=,fid: f10]
 */
-use @glfwGetWindowUserPointer[Notify](window: NullablePointer[GLFWwindow] tag)
+use @glfwGetWindowUserPointer[WindowCallbackListener](window: NullablePointer[GLFWwindow] tag)
 
 
 
