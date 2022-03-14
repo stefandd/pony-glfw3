@@ -25,7 +25,7 @@ use @glClearIndex[None](c: F32)
     [FundamentalType(float) size=32]
     [FundamentalType(float) size=32]
 */
-use @glClearColor[None](red: F32, green: F32, blue: F32, alpha: F32)
+use @glClearColor[None](red: U8, green: U8, blue: U8, alpha: U8)
 
 
 
@@ -38,7 +38,7 @@ use @glClearColor[None](red: F32, green: F32, blue: F32, alpha: F32)
   Arguments:
     [FundamentalType(unsigned int) size=32]
 */
-use @glClear[None](mask: U32)
+use @glClear[None](mask: U16)
 
 
 

@@ -26,7 +26,7 @@ primitive Glfw3
     [FundamentalType(float) size=32]
     [FundamentalType(float) size=32]
 */
-  fun glClearColor(red: F32, green: F32, blue: F32, alpha: F32): None =>
+  fun glClearColor(red: U8, green: U8, blue: U8, alpha: U8): None =>
     @glClearColor(red, green, blue, alpha)
 
 
@@ -39,7 +39,7 @@ primitive Glfw3
   Arguments:
     [FundamentalType(unsigned int) size=32]
 */
-  fun glClear(mask: U32): None =>
+  fun glClear(mask: U16): None =>
     @glClear(mask)
 
 
@@ -7132,8 +7132,11 @@ primitive Glfw3
     [PointerType size=64]->[FundamentalType(int) size=32]
     [PointerType size=64]->[FundamentalType(int) size=32]
 */
-  fun glfwGetWindowSize(window: NullablePointer[GLFWwindow] tag, width: Pointer[I32] tag, height: Pointer[I32] tag): None =>
-    @glfwGetWindowSize(window, width, height)
+  fun glfwGetWindowSize(window: NullablePointer[GLFWwindow] tag): (I32, I32) =>
+    var w: I32 = 0
+    var h: I32 = 0
+    @glfwGetWindowSize(window, addressof w, addressof h)
+    (w, h)
 
 
 /*
