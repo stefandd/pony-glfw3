@@ -6,26 +6,26 @@ actor Main is WindowCallbackListener
 
   new create(env: Env) =>
     _env = env
-    _env.out.print("Hello Glfw3")
+    _env.out.print("Hello GLFW")
 
-    if (Glfw3.glfwInit() == 1) then _env.out.print("WOOT") end
+    if (GLFW.glfwInit() == 1) then _env.out.print("WOOT") end
 
-    _window = Glfw3.glfwCreateWindow(640, 480, "My Title", NullablePointer[GLFWmonitor].none(), NullablePointer[GLFWwindow].none(), this)
-    Glfw3.glfwEnableKeyCallback(_window)
+    _window = GLFW.glfwCreateWindow(640, 480, "My Title", NullablePointer[GLFWmonitor].none(), NullablePointer[GLFWwindow].none(), this)
+    GLFW.glfwEnableKeyCallback(_window)
     loop()
 
   be loop() =>
-    if (Glfw3.glfwWindowShouldClose(_window) == 0) then
-      Glfw3.glfwPollEvents()
+    if (GLFW.glfwWindowShouldClose(_window) == 0) then
+      GLFW.glfwPollEvents()
       loop()
     else
-      Glfw3.glfwDestroyWindow(_window)
-      Glfw3.glfwTerminate()
+      GLFW.glfwDestroyWindow(_window)
+      GLFW.glfwTerminate()
     end
 
   fun keyCallback(window: NullablePointer[GLFWwindow] tag, key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
     match key
     | GLFWkey.escape()
-    | GLFWkey.letter_q() => Glfw3.glfwSetWindowShouldClose(window, 1)
+    | GLFWkey.q() => GLFW.glfwSetWindowShouldClose(window, 1)
     end
     _env.out.print("key: " + key.string())
