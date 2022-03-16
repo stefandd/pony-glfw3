@@ -25,7 +25,7 @@ actor Main is WindowListener
 
   fun keyCallback(key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
     match key
-    | GLFWkey.escape()
-    | GLFWkey.q() => _window.setShouldClose(true)
+    | GLFW.key_escape()
+    | GLFW.key_q() => _window.setShouldClose(true)
     end
     _env.out.print("key: " + key.string())
