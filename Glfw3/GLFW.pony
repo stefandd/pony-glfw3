@@ -7,30 +7,30 @@ use @glfwGetVersion[None](major: Pointer[I32] tag, minor: Pointer[I32] tag, rev:
 use @glfwGetVersionString[Pointer[U8]]()
 use @glfwGetError[I32](description: Pointer[Pointer[U8]] tag)
 use @glfwSetErrorCallback[Pointer[None]](callback: Pointer[None] tag)
-use @glfwGetMonitors[Array[NullablePointer[GLFWmonitor]]](count: Pointer[I32] tag)
-use @glfwGetPrimaryMonitor[NullablePointer[GLFWmonitor]]()
-use @glfwGetMonitorPos[None](monitor: NullablePointer[GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag)
-use @glfwGetMonitorWorkarea[None](monitor: NullablePointer[GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag, width: Pointer[I32] tag, height: Pointer[I32] tag)
-use @glfwGetMonitorPhysicalSize[None](monitor: NullablePointer[GLFWmonitor] tag, widthMM: Pointer[I32] tag, heightMM: Pointer[I32] tag)
-use @glfwGetMonitorContentScale[None](monitor: NullablePointer[GLFWmonitor] tag, xscale: Pointer[F32] tag, yscale: Pointer[F32] tag)
-use @glfwGetMonitorName[Pointer[U8]](monitor: NullablePointer[GLFWmonitor] tag)
-use @glfwSetMonitorUserPointer[None](monitor: NullablePointer[GLFWmonitor] tag, pointer: Pointer[None] tag)
-use @glfwGetMonitorUserPointer[Pointer[None]](monitor: NullablePointer[GLFWmonitor] tag)
+use @glfwGetMonitors[Array[NullablePointer[_GLFWmonitor]]](count: Pointer[I32] tag)
+use @glfwGetPrimaryMonitor[NullablePointer[_GLFWmonitor]]()
+use @glfwGetMonitorPos[None](monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag)
+use @glfwGetMonitorWorkarea[None](monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag, width: Pointer[I32] tag, height: Pointer[I32] tag)
+use @glfwGetMonitorPhysicalSize[None](monitor: NullablePointer[_GLFWmonitor] tag, widthMM: Pointer[I32] tag, heightMM: Pointer[I32] tag)
+use @glfwGetMonitorContentScale[None](monitor: NullablePointer[_GLFWmonitor] tag, xscale: Pointer[F32] tag, yscale: Pointer[F32] tag)
+use @glfwGetMonitorName[Pointer[U8]](monitor: NullablePointer[_GLFWmonitor] tag)
+use @glfwSetMonitorUserPointer[None](monitor: NullablePointer[_GLFWmonitor] tag, pointer: Pointer[None] tag)
+use @glfwGetMonitorUserPointer[Pointer[None]](monitor: NullablePointer[_GLFWmonitor] tag)
 use @glfwSetMonitorCallback[Pointer[None]](callback: Pointer[None] tag)
-use @glfwGetVideoModes[NullablePointer[GLFWvidmode]](monitor: NullablePointer[GLFWmonitor] tag, count: Pointer[I32] tag)
-use @glfwGetVideoMode[NullablePointer[GLFWvidmode]](monitor: NullablePointer[GLFWmonitor] tag)
-use @glfwSetGamma[None](monitor: NullablePointer[GLFWmonitor] tag, gamma: F32)
-use @glfwGetGammaRamp[NullablePointer[GLFWgammaramp]](monitor: NullablePointer[GLFWmonitor] tag)
-use @glfwSetGammaRamp[None](monitor: NullablePointer[GLFWmonitor] tag, ramp: NullablePointer[GLFWgammaramp] tag)
+use @glfwGetVideoModes[NullablePointer[_GLFWvidmode]](monitor: NullablePointer[_GLFWmonitor] tag, count: Pointer[I32] tag)
+use @glfwGetVideoMode[NullablePointer[_GLFWvidmode]](monitor: NullablePointer[_GLFWmonitor] tag)
+use @glfwSetGamma[None](monitor: NullablePointer[_GLFWmonitor] tag, gamma: F32)
+use @glfwGetGammaRamp[NullablePointer[_GLFWgammaramp]](monitor: NullablePointer[_GLFWmonitor] tag)
+use @glfwSetGammaRamp[None](monitor: NullablePointer[_GLFWmonitor] tag, ramp: NullablePointer[_GLFWgammaramp] tag)
 use @glfwDefaultWindowHints[None]()
 use @glfwWindowHint[None](hint: I32, value: I32)
 use @glfwWindowHintString[None](hint: I32, value: Pointer[U8] tag)
-use @glfwCreateWindow[NullablePointer[_GLFWwindow]](width: I32, height: I32, title: Pointer[U8] tag, monitor: NullablePointer[GLFWmonitor] tag, share: NullablePointer[_GLFWwindow] tag)
+use @glfwCreateWindow[NullablePointer[_GLFWwindow]](width: I32, height: I32, title: Pointer[U8] tag, monitor: NullablePointer[_GLFWmonitor] tag, share: NullablePointer[_GLFWwindow] tag)
 use @glfwDestroyWindow[None](window: NullablePointer[_GLFWwindow] tag)
 use @glfwWindowShouldClose[I32](window: NullablePointer[_GLFWwindow] tag)
 use @glfwSetWindowShouldClose[None](window: NullablePointer[_GLFWwindow] tag, value: I32)
 use @glfwSetWindowTitle[None](window: NullablePointer[_GLFWwindow] tag, title: Pointer[U8] tag)
-use @glfwSetWindowIcon[None](window: NullablePointer[_GLFWwindow] tag, count: I32, images: NullablePointer[GLFWimage] tag)
+use @glfwSetWindowIcon[None](window: NullablePointer[_GLFWwindow] tag, count: I32, images: NullablePointer[_GLFWimage] tag)
 use @glfwGetWindowPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag)
 use @glfwSetWindowPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: I32, ypos: I32)
 use @glfwGetWindowSize[None](window: NullablePointer[_GLFWwindow] tag, width: Pointer[I32] tag, height: Pointer[I32] tag)
@@ -49,12 +49,12 @@ use @glfwShowWindow[None](window: NullablePointer[_GLFWwindow] tag)
 use @glfwHideWindow[None](window: NullablePointer[_GLFWwindow] tag)
 use @glfwFocusWindow[None](window: NullablePointer[_GLFWwindow] tag)
 use @glfwRequestWindowAttention[None](window: NullablePointer[_GLFWwindow] tag)
-use @glfwGetWindowMonitor[NullablePointer[GLFWmonitor]](window: NullablePointer[_GLFWwindow] tag)
-use @glfwSetWindowMonitor[None](window: NullablePointer[_GLFWwindow] tag, monitor: NullablePointer[GLFWmonitor] tag, xpos: I32, ypos: I32, width: I32, height: I32, refreshRate: I32)
+use @glfwGetWindowMonitor[NullablePointer[_GLFWmonitor]](window: NullablePointer[_GLFWwindow] tag)
+use @glfwSetWindowMonitor[None](window: NullablePointer[_GLFWwindow] tag, monitor: NullablePointer[_GLFWmonitor] tag, xpos: I32, ypos: I32, width: I32, height: I32, refreshRate: I32)
 use @glfwGetWindowAttrib[I32](window: NullablePointer[_GLFWwindow] tag, attrib: I32)
 use @glfwSetWindowAttrib[None](window: NullablePointer[_GLFWwindow] tag, attrib: I32, value: I32)
-use @glfwSetWindowUserPointer[None](window: NullablePointer[_GLFWwindow] tag, pointer: Window)
-use @glfwGetWindowUserPointer[Window](window: NullablePointer[_GLFWwindow] tag)
+use @glfwSetWindowUserPointer[None](window: NullablePointer[_GLFWwindow] tag, pointer: GLFWWindow)
+use @glfwGetWindowUserPointer[GLFWWindow](window: NullablePointer[_GLFWwindow] tag)
 use @glfwSetWindowPosCallback[Pointer[None]](window: NullablePointer[_GLFWwindow] tag, callback: Pointer[None] tag)
 use @glfwSetWindowSizeCallback[Pointer[None]](window: NullablePointer[_GLFWwindow] tag, callback: Pointer[None] tag)
 use @glfwSetWindowCloseCallback[Pointer[None]](window: NullablePointer[_GLFWwindow] tag, callback: Pointer[None] tag)
@@ -77,10 +77,10 @@ use @glfwGetKey[I32](window: NullablePointer[_GLFWwindow] tag, key: I32)
 use @glfwGetMouseButton[I32](window: NullablePointer[_GLFWwindow] tag, button: I32)
 use @glfwGetCursorPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: Pointer[F64] tag, ypos: Pointer[F64] tag)
 use @glfwSetCursorPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: F64, ypos: F64)
-use @glfwCreateCursor[NullablePointer[GLFWcursor]](image: NullablePointer[GLFWimage] tag, xhot: I32, yhot: I32)
-use @glfwCreateStandardCursor[NullablePointer[GLFWcursor]](shape: I32)
-use @glfwDestroyCursor[None](cursor: NullablePointer[GLFWcursor] tag)
-use @glfwSetCursor[None](window: NullablePointer[_GLFWwindow] tag, cursor: NullablePointer[GLFWcursor] tag)
+use @glfwCreateCursor[NullablePointer[_GLFWcursor]](image: NullablePointer[_GLFWimage] tag, xhot: I32, yhot: I32)
+use @glfwCreateStandardCursor[NullablePointer[_GLFWcursor]](shape: I32)
+use @glfwDestroyCursor[None](cursor: NullablePointer[_GLFWcursor] tag)
+use @glfwSetCursor[None](window: NullablePointer[_GLFWwindow] tag, cursor: NullablePointer[_GLFWcursor] tag)
 use @glfwSetKeyCallback[Pointer[None]](window: NullablePointer[_GLFWwindow] tag, callback: Pointer[None] tag)
 use @glfwSetCharCallback[Pointer[None]](window: NullablePointer[_GLFWwindow] tag, callback: Pointer[None] tag)
 use @glfwSetCharModsCallback[Pointer[None]](window: NullablePointer[_GLFWwindow] tag, callback: Pointer[None] tag)
@@ -101,7 +101,7 @@ use @glfwJoystickIsGamepad[I32](jid: I32)
 use @glfwSetJoystickCallback[Pointer[None]](callback: Pointer[None] tag)
 use @glfwUpdateGamepadMappings[I32](string: Pointer[U8] tag)
 use @glfwGetGamepadName[Pointer[U8]](jid: I32)
-use @glfwGetGamepadState[I32](jid: I32, state: NullablePointer[GLFWgamepadstate] tag)
+use @glfwGetGamepadState[I32](jid: I32, state: NullablePointer[_GLFWgamepadstate] tag)
 use @glfwSetClipboardString[None](window: NullablePointer[_GLFWwindow] tag, string: Pointer[U8] tag)
 use @glfwGetClipboardString[Pointer[U8]](window: NullablePointer[_GLFWwindow] tag)
 use @glfwGetTime[F64]()
@@ -116,6 +116,33 @@ use @glfwExtensionSupported[I32](extension: Pointer[U8] tag)
 use @glfwGetProcAddress[Pointer[None]](procname: Pointer[U8] tag)
 use @glfwVulkanSupported[I32]()
 use @glfwGetRequiredInstanceExtensions[Pointer[Pointer[U8]]](count: Pointer[U32] tag)
+
+struct _GLFWvidmode
+  var width: I32 = I32(0)
+  var height: I32 = I32(0)
+  var redBits: I32 = I32(0)
+  var greenBits: I32 = I32(0)
+  var blueBits: I32 = I32(0)
+  var refreshRate: I32 = I32(0)
+
+struct _GLFWimage
+  var width: I32 = I32(0)
+  var height: I32 = I32(0)
+  var pixels: Pointer[U8] = Pointer[U8]
+
+struct _GLFWgammaramp
+  var red: Pointer[U16] = Pointer[U16]
+  var green: Pointer[U16] = Pointer[U16]
+  var blue: Pointer[U16] = Pointer[U16]
+  var size: U32 = U32(0)
+
+struct _GLFWgamepadstate
+  var buttons: Pointer[U8] = Pointer[U8]
+  var axes: Pointer[F32] = Pointer[F32]
+
+struct _GLFWcursor
+struct _GLFWwindow
+struct _GLFWmonitor
 
 primitive GLFW
 
@@ -323,49 +350,49 @@ primitive GLFW
   fun glfwSetErrorCallback(callback: Pointer[None] tag): Pointer[None] =>
     @glfwSetErrorCallback(callback)
 
-  fun glfwGetMonitors(count: Pointer[I32] tag): Array[NullablePointer[GLFWmonitor]] =>
+  fun glfwGetMonitors(count: Pointer[I32] tag): Array[NullablePointer[_GLFWmonitor]] =>
     @glfwGetMonitors(count)
 
-  fun glfwGetPrimaryMonitor(): NullablePointer[GLFWmonitor] =>
+  fun glfwGetPrimaryMonitor(): NullablePointer[_GLFWmonitor] =>
     @glfwGetPrimaryMonitor()
 
-  fun glfwGetMonitorPos(monitor: NullablePointer[GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag): None =>
+  fun glfwGetMonitorPos(monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag): None =>
     @glfwGetMonitorPos(monitor, xpos, ypos)
 
-  fun glfwGetMonitorWorkarea(monitor: NullablePointer[GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag, width: Pointer[I32] tag, height: Pointer[I32] tag): None =>
+  fun glfwGetMonitorWorkarea(monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag, width: Pointer[I32] tag, height: Pointer[I32] tag): None =>
     @glfwGetMonitorWorkarea(monitor, xpos, ypos, width, height)
 
-  fun glfwGetMonitorPhysicalSize(monitor: NullablePointer[GLFWmonitor] tag, widthMM: Pointer[I32] tag, heightMM: Pointer[I32] tag): None =>
+  fun glfwGetMonitorPhysicalSize(monitor: NullablePointer[_GLFWmonitor] tag, widthMM: Pointer[I32] tag, heightMM: Pointer[I32] tag): None =>
     @glfwGetMonitorPhysicalSize(monitor, widthMM, heightMM)
 
-  fun glfwGetMonitorContentScale(monitor: NullablePointer[GLFWmonitor] tag, xscale: Pointer[F32] tag, yscale: Pointer[F32] tag): None =>
+  fun glfwGetMonitorContentScale(monitor: NullablePointer[_GLFWmonitor] tag, xscale: Pointer[F32] tag, yscale: Pointer[F32] tag): None =>
     @glfwGetMonitorContentScale(monitor, xscale, yscale)
 
-  fun glfwGetMonitorName(monitor: NullablePointer[GLFWmonitor] tag): String =>
+  fun glfwGetMonitorName(monitor: NullablePointer[_GLFWmonitor] tag): String =>
     String.from_cstring(@glfwGetMonitorName(monitor)).clone()
 
-  fun glfwSetMonitorUserPointer(monitor: NullablePointer[GLFWmonitor] tag, pointer: Pointer[None] tag): None =>
+  fun glfwSetMonitorUserPointer(monitor: NullablePointer[_GLFWmonitor] tag, pointer: Pointer[None] tag): None =>
     @glfwSetMonitorUserPointer(monitor, pointer)
 
-  fun glfwGetMonitorUserPointer(monitor: NullablePointer[GLFWmonitor] tag): Pointer[None] =>
+  fun glfwGetMonitorUserPointer(monitor: NullablePointer[_GLFWmonitor] tag): Pointer[None] =>
     @glfwGetMonitorUserPointer(monitor)
 
   fun glfwSetMonitorCallback(callback: Pointer[None] tag): Pointer[None] =>
     @glfwSetMonitorCallback(callback)
 
-  fun glfwGetVideoModes(monitor: NullablePointer[GLFWmonitor] tag, count: Pointer[I32] tag): NullablePointer[GLFWvidmode] =>
+  fun glfwGetVideoModes(monitor: NullablePointer[_GLFWmonitor] tag, count: Pointer[I32] tag): NullablePointer[_GLFWvidmode] =>
     @glfwGetVideoModes(monitor, count)
 
-  fun glfwGetVideoMode(monitor: NullablePointer[GLFWmonitor] tag): NullablePointer[GLFWvidmode] =>
+  fun glfwGetVideoMode(monitor: NullablePointer[_GLFWmonitor] tag): NullablePointer[_GLFWvidmode] =>
     @glfwGetVideoMode(monitor)
 
-  fun glfwSetGamma(monitor: NullablePointer[GLFWmonitor] tag, gamma: F32): None =>
+  fun glfwSetGamma(monitor: NullablePointer[_GLFWmonitor] tag, gamma: F32): None =>
     @glfwSetGamma(monitor, gamma)
 
-  fun glfwGetGammaRamp(monitor: NullablePointer[GLFWmonitor] tag): NullablePointer[GLFWgammaramp] =>
+  fun glfwGetGammaRamp(monitor: NullablePointer[_GLFWmonitor] tag): NullablePointer[_GLFWgammaramp] =>
     @glfwGetGammaRamp(monitor)
 
-  fun glfwSetGammaRamp(monitor: NullablePointer[GLFWmonitor] tag, ramp: NullablePointer[GLFWgammaramp] tag): None =>
+  fun glfwSetGammaRamp(monitor: NullablePointer[_GLFWmonitor] tag, ramp: NullablePointer[_GLFWgammaramp] tag): None =>
     @glfwSetGammaRamp(monitor, ramp)
 
   fun glfwDefaultWindowHints(): None =>
@@ -398,13 +425,13 @@ primitive GLFW
   fun glfwGetKeyScancode(key: I32): I32 =>
     @glfwGetKeyScancode(key)
 
-  fun glfwCreateCursor(image: NullablePointer[GLFWimage] tag, xhot: I32, yhot: I32): NullablePointer[GLFWcursor] =>
+  fun glfwCreateCursor(image: NullablePointer[_GLFWimage] tag, xhot: I32, yhot: I32): NullablePointer[_GLFWcursor] =>
     @glfwCreateCursor(image, xhot, yhot)
 
-  fun glfwCreateStandardCursor(shape: I32): NullablePointer[GLFWcursor] =>
+  fun glfwCreateStandardCursor(shape: I32): NullablePointer[_GLFWcursor] =>
     @glfwCreateStandardCursor(shape)
 
-  fun glfwDestroyCursor(cursor: NullablePointer[GLFWcursor] tag): None =>
+  fun glfwDestroyCursor(cursor: NullablePointer[_GLFWcursor] tag): None =>
     @glfwDestroyCursor(cursor)
 
   fun glfwJoystickPresent(jid: I32): I32 =>
@@ -443,7 +470,7 @@ primitive GLFW
   fun glfwGetGamepadName(jid: I32): String =>
     String.from_cstring(@glfwGetGamepadName(jid)).clone()
 
-  fun glfwGetGamepadState(jid: I32, state: NullablePointer[GLFWgamepadstate] tag): I32 =>
+  fun glfwGetGamepadState(jid: I32, state: NullablePointer[_GLFWgamepadstate] tag): I32 =>
     @glfwGetGamepadState(jid, state)
 
   fun glfwGetTime(): F64 =>

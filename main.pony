@@ -1,7 +1,7 @@
 use "Glfw3"
 
 actor Main is WindowListener
-  let _window: Window
+  let _window: GLFWWindow
   let _env: Env
 
   new create(env: Env) =>
@@ -10,7 +10,7 @@ actor Main is WindowListener
 
     if (GLFW.glfwInit() == 1) then _env.out.print("WOOT") end
 
-    _window = Window(640, 480, "My Title")
+    _window = GLFWWindow(640, 480, "My Title")
     _window.setListener(this)
     _window.enableKeyCallback()
     loop()

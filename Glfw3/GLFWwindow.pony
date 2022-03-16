@@ -1,43 +1,9 @@
-
-
-/*
-  Source: /nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:1182
-  Original Name: _GLFWwindow
-  Struct Size (bits):
-  Struct Align (bits):
-
-  Fields (Offset in bits):
-*/
-struct _GLFWwindow
-
-interface WindowListener
-  fun windowPosCallback(xpos: I64 val, ypos: I64 val) => None
-  fun windowSizeCallback(width: I64 val, height: I64 val) => None
-  fun windowCloseCallback() => None
-  fun windowRefreshCallback() => None
-  fun windowFocusCallback(focused: I64) => None
-  fun windowIconifyCallback(iconified: I64) => None
-  fun windowMaximizeCallback(maximized: I64) => None
-  fun framebufferSizeCallback(width: I64, height: I64) => None
-  fun windowContentScaleCallback(xscale: F64, yscale: F64) => None
-  fun keyCallback(key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) => None
-  fun charCallback(codepoint: U64) => None
-  fun charModsCallback(codepoint: U64, mods: I64) => None
-  fun mouseButtonCallback(button: I64, action: I64, mods: I64) => None
-  fun cursorPosCallback(xpos: F64, ypos: F64) => None
-  fun cursorEnterCallback(entered: I64) => None
-  fun scrollCallback(xoffset: F64, yoffset: F64) => None
-  fun dropCallback(path_count: I64, paths: String) => None
-  fun joystickCallback(jid: I64, event: I64) => None
-
-class DefaultWindowListener is WindowListener
-
-class Window
+class GLFWWindow
   let _window: NullablePointer[_GLFWwindow]
   var _listener: WindowListener box = DefaultWindowListener
 
   new create(width: I32, height: I32, title: String) =>
-    _window = @glfwCreateWindow(width, height, title.cstring(), NullablePointer[GLFWmonitor].none(), NullablePointer[_GLFWwindow].none())
+    _window = @glfwCreateWindow(width, height, title.cstring(), NullablePointer[_GLFWmonitor].none(), NullablePointer[_GLFWwindow].none())
     @glfwSetWindowUserPointer(_window, this)
 
   fun _final() =>
@@ -166,7 +132,7 @@ class Window
   fun setWindowTitle(title: String): None =>
     @glfwSetWindowTitle(_window, title.cstring())
 
-  fun setWindowIcon(count: I32, images: NullablePointer[GLFWimage] tag): None =>
+  fun setWindowIcon(count: I32, images: NullablePointer[_GLFWimage] tag): None =>
     @glfwSetWindowIcon(_window, count, images)
 
   fun getPos(): (I32, I32) =>
@@ -241,11 +207,11 @@ class Window
     @glfwRequestWindowAttention(_window)
 
   // TODO: return a Monitor object
-  fun getMonitor(): NullablePointer[GLFWmonitor] =>
+  fun getMonitor(): NullablePointer[_GLFWmonitor] =>
     @glfwGetWindowMonitor(_window)
 
   // TODO: take a Monitor object
-  fun setMonitor(monitor: NullablePointer[GLFWmonitor] tag, xpos: I32, ypos: I32, width: I32, height: I32, refreshRate: I32): None =>
+  fun setMonitor(monitor: NullablePointer[_GLFWmonitor] tag, xpos: I32, ypos: I32, width: I32, height: I32, refreshRate: I32): None =>
     @glfwSetWindowMonitor(_window, monitor, xpos, ypos, width, height, refreshRate)
 
   fun getAttrib(attrib: I32): I32 =>
@@ -276,7 +242,7 @@ class Window
     @glfwSetCursorPos(_window, xpos, ypos)
 
   // TODO: take a Cursor object
-  fun setCursor(cursor: NullablePointer[GLFWcursor] tag): None =>
+  fun setCursor(cursor: NullablePointer[_GLFWcursor] tag): None =>
     @glfwSetCursor(_window, cursor)
 
   fun setClipboardString(string: String): None =>
@@ -285,10 +251,31 @@ class Window
   fun getClipboardString(): String =>
     String.from_cstring(@glfwGetClipboardString(_window)).clone()
 
-  fun glfwGetCurrentContext(): Window =>
+  fun glfwGetCurrentContext(): GLFWWindow =>
     @glfwGetWindowUserPointer(@glfwGetCurrentContext())
 
   fun swapBuffers(): None =>
     @glfwSwapBuffers(_window)
 
+interface WindowListener
+  fun windowPosCallback(xpos: I64 val, ypos: I64 val) => None
+  fun windowSizeCallback(width: I64 val, height: I64 val) => None
+  fun windowCloseCallback() => None
+  fun windowRefreshCallback() => None
+  fun windowFocusCallback(focused: I64) => None
+  fun windowIconifyCallback(iconified: I64) => None
+  fun windowMaximizeCallback(maximized: I64) => None
+  fun framebufferSizeCallback(width: I64, height: I64) => None
+  fun windowContentScaleCallback(xscale: F64, yscale: F64) => None
+  fun keyCallback(key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) => None
+  fun charCallback(codepoint: U64) => None
+  fun charModsCallback(codepoint: U64, mods: I64) => None
+  fun mouseButtonCallback(button: I64, action: I64, mods: I64) => None
+  fun cursorPosCallback(xpos: F64, ypos: F64) => None
+  fun cursorEnterCallback(entered: I64) => None
+  fun scrollCallback(xoffset: F64, yoffset: F64) => None
+  fun dropCallback(path_count: I64, paths: String) => None
+  fun joystickCallback(jid: I64, event: I64) => None
+
+class DefaultWindowListener is WindowListener
 
