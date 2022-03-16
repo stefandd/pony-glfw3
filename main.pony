@@ -1,7 +1,7 @@
 use "Glfw3"
 
-actor Main is WindowCallbackListener
-  let _window: NullablePointer[GLFWwindow]
+actor Main is WindowListener
+  let _window: Window
   let _env: Env
 
   new create(env: Env) =>
@@ -10,22 +10,22 @@ actor Main is WindowCallbackListener
 
     if (GLFW.glfwInit() == 1) then _env.out.print("WOOT") end
 
-    _window = GLFW.glfwCreateWindow(640, 480, "My Title", NullablePointer[GLFWmonitor].none(), NullablePointer[GLFWwindow].none(), this)
-    GLFW.glfwEnableKeyCallback(_window)
+    _window = Window(640, 480, "My Title")
+    _window.setListener(this)
+    _window.enableKeyCallback()
     loop()
 
   be loop() =>
-    if (GLFW.glfwWindowShouldClose(_window) == 0) then
+    if (_window.shouldClose()) then
+      GLFW.glfwTerminate()
+    else
       GLFW.glfwPollEvents()
       loop()
-    else
-      GLFW.glfwDestroyWindow(_window)
-      GLFW.glfwTerminate()
     end
 
-  fun keyCallback(window: NullablePointer[GLFWwindow] tag, key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
+  fun keyCallback(key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
     match key
     | GLFWkey.escape()
-    | GLFWkey.q() => GLFW.glfwSetWindowShouldClose(window, 1)
+    | GLFWkey.q() => _window.setShouldClose(true)
     end
     _env.out.print("key: " + key.string())
