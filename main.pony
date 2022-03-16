@@ -1,31 +1,31 @@
 use "Glfw3"
 
 actor Main is WindowListener
-  let _window: GLFWWindow
-  let _env: Env
+  let glfw_window: GLFWWindow
+  let env: Env
 
-  new create(env: Env) =>
-    _env = env
-    _env.out.print("Hello GLFW")
+  new create(env': Env) =>
+    env = env'
+    env.out.print("Hello GLFW")
 
-    if (GLFW.glfwInit() == 1) then _env.out.print("WOOT") end
+    if (GLFW.glfwInit() == 1) then env.out.print("WOOT") end
 
-    _window = GLFWWindow(640, 480, "My Title")
-    _window.setListener(this)
-    _window.enableKeyCallback()
+    glfw_window = GLFWWindow(640, 480, "My Title")
+    glfw_window.set_listener(this)
+    glfw_window.enable_key_callback()
     loop()
 
   be loop() =>
-    if (_window.shouldClose()) then
+    if (glfw_window.should_close()) then
       GLFW.glfwTerminate()
     else
       GLFW.glfwPollEvents()
       loop()
     end
 
-  fun keyCallback(key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
+  fun key_callback(key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
     match key
     | GLFW.key_escape()
-    | GLFW.key_q() => _window.setShouldClose(true)
+    | GLFW.key_q() => glfw_window.set_should_close(true)
     end
-    _env.out.print("key: " + key.string())
+    env.out.print("key: " + key.string())
