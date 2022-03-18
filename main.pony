@@ -8,7 +8,7 @@ actor Main is WindowListener
     env = env'
     env.out.print("Hello GLFW")
 
-    if (GLFW.glfwInit() == 1) then env.out.print("WOOT") end
+    if (GLFW.init() == 1) then env.out.print("WOOT") end
 
     glfw_window = GLFWWindow(640, 480, "My Title")
     glfw_window.set_listener(this)
@@ -17,9 +17,9 @@ actor Main is WindowListener
 
   be loop() =>
     if (glfw_window.should_close()) then
-      GLFW.glfwTerminate()
+      GLFW.terminate()
     else
-      GLFW.glfwPollEvents()
+      GLFW.poll_events()
       loop()
     end
 

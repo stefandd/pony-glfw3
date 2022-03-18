@@ -329,174 +329,174 @@ primitive GLFW
   fun joystick_15(): I64 => 14
   fun joystick_16(): I64 => 15
 
-  fun glfwInit(): I32 =>
+  fun init(): I32 =>
     @glfwInit()
 
-  fun glfwTerminate(): None =>
+  fun terminate(): None =>
     @glfwTerminate()
 
-  fun glfwInitHint(hint: I32, value: I32): None =>
+  fun init_hint(hint: I32, value: I32): None =>
     @glfwInitHint(hint, value)
 
-  fun glfwGetVersion(major: Pointer[I32] tag, minor: Pointer[I32] tag, rev: Pointer[I32] tag): None =>
+  fun get_version(major: Pointer[I32] tag, minor: Pointer[I32] tag, rev: Pointer[I32] tag): None =>
     @glfwGetVersion(major, minor, rev)
 
-  fun glfwGetVersionString(): String =>
+  fun get_version_string(): String =>
     String.from_cstring(@glfwGetVersionString()).clone()
 
-  fun glfwGetError(description: Pointer[Pointer[U8]] tag): I32 =>
+  fun get_error(description: Pointer[Pointer[U8]] tag): I32 =>
     @glfwGetError(description)
 
-  fun glfwSetErrorCallback(callback: Pointer[None] tag): Pointer[None] =>
+  fun set_error_callback(callback: Pointer[None] tag): Pointer[None] =>
     @glfwSetErrorCallback(callback)
 
-  fun glfwGetMonitors(count: Pointer[I32] tag): Array[NullablePointer[_GLFWmonitor]] =>
+  fun get_monitors(count: Pointer[I32] tag): Array[NullablePointer[_GLFWmonitor]] =>
     @glfwGetMonitors(count)
 
-  fun glfwGetPrimaryMonitor(): NullablePointer[_GLFWmonitor] =>
+  fun get_primary_monitor(): NullablePointer[_GLFWmonitor] =>
     @glfwGetPrimaryMonitor()
 
-  fun glfwGetMonitorPos(monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag): None =>
+  fun get_monitor_pos(monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag): None =>
     @glfwGetMonitorPos(monitor, xpos, ypos)
 
-  fun glfwGetMonitorWorkarea(monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag, width: Pointer[I32] tag, height: Pointer[I32] tag): None =>
+  fun get_monitor_workarea(monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag, width: Pointer[I32] tag, height: Pointer[I32] tag): None =>
     @glfwGetMonitorWorkarea(monitor, xpos, ypos, width, height)
 
-  fun glfwGetMonitorPhysicalSize(monitor: NullablePointer[_GLFWmonitor] tag, widthMM: Pointer[I32] tag, heightMM: Pointer[I32] tag): None =>
+  fun get_monitor_physical_size(monitor: NullablePointer[_GLFWmonitor] tag, widthMM: Pointer[I32] tag, heightMM: Pointer[I32] tag): None =>
     @glfwGetMonitorPhysicalSize(monitor, widthMM, heightMM)
 
-  fun glfwGetMonitorContentScale(monitor: NullablePointer[_GLFWmonitor] tag, xscale: Pointer[F32] tag, yscale: Pointer[F32] tag): None =>
+  fun get_monitor_content_scale(monitor: NullablePointer[_GLFWmonitor] tag, xscale: Pointer[F32] tag, yscale: Pointer[F32] tag): None =>
     @glfwGetMonitorContentScale(monitor, xscale, yscale)
 
-  fun glfwGetMonitorName(monitor: NullablePointer[_GLFWmonitor] tag): String =>
+  fun get_monitor_name(monitor: NullablePointer[_GLFWmonitor] tag): String =>
     String.from_cstring(@glfwGetMonitorName(monitor)).clone()
 
-  fun glfwSetMonitorUserPointer(monitor: NullablePointer[_GLFWmonitor] tag, pointer: Pointer[None] tag): None =>
+  fun set_monitor_user_pointer(monitor: NullablePointer[_GLFWmonitor] tag, pointer: Pointer[None] tag): None =>
     @glfwSetMonitorUserPointer(monitor, pointer)
 
-  fun glfwGetMonitorUserPointer(monitor: NullablePointer[_GLFWmonitor] tag): Pointer[None] =>
+  fun get_monitor_user_pointer(monitor: NullablePointer[_GLFWmonitor] tag): Pointer[None] =>
     @glfwGetMonitorUserPointer(monitor)
 
-  fun glfwSetMonitorCallback(callback: Pointer[None] tag): Pointer[None] =>
+  fun set_monitor_callback(callback: Pointer[None] tag): Pointer[None] =>
     @glfwSetMonitorCallback(callback)
 
-  fun glfwGetVideoModes(monitor: NullablePointer[_GLFWmonitor] tag, count: Pointer[I32] tag): NullablePointer[_GLFWvidmode] =>
+  fun get_video_modes(monitor: NullablePointer[_GLFWmonitor] tag, count: Pointer[I32] tag): NullablePointer[_GLFWvidmode] =>
     @glfwGetVideoModes(monitor, count)
 
-  fun glfwGetVideoMode(monitor: NullablePointer[_GLFWmonitor] tag): NullablePointer[_GLFWvidmode] =>
+  fun get_video_mode(monitor: NullablePointer[_GLFWmonitor] tag): NullablePointer[_GLFWvidmode] =>
     @glfwGetVideoMode(monitor)
 
-  fun glfwSetGamma(monitor: NullablePointer[_GLFWmonitor] tag, gamma: F32): None =>
+  fun set_gamma(monitor: NullablePointer[_GLFWmonitor] tag, gamma: F32): None =>
     @glfwSetGamma(monitor, gamma)
 
-  fun glfwGetGammaRamp(monitor: NullablePointer[_GLFWmonitor] tag): NullablePointer[_GLFWgammaramp] =>
+  fun get_gamma_ramp(monitor: NullablePointer[_GLFWmonitor] tag): NullablePointer[_GLFWgammaramp] =>
     @glfwGetGammaRamp(monitor)
 
-  fun glfwSetGammaRamp(monitor: NullablePointer[_GLFWmonitor] tag, ramp: NullablePointer[_GLFWgammaramp] tag): None =>
+  fun set_gamma_ramp(monitor: NullablePointer[_GLFWmonitor] tag, ramp: NullablePointer[_GLFWgammaramp] tag): None =>
     @glfwSetGammaRamp(monitor, ramp)
 
-  fun glfwDefaultWindowHints(): None =>
+  fun default_window_hints(): None =>
     @glfwDefaultWindowHints()
 
-  fun glfwWindowHint(hint: I32, value: I32): None =>
+  fun window_hint(hint: I32, value: I32): None =>
     @glfwWindowHint(hint, value)
 
-  fun glfwWindowHintString(hint: I32, value: String): None =>
+  fun window_hint_string(hint: I32, value: String): None =>
     @glfwWindowHintString(hint, value.cstring())
 
-  fun glfwPollEvents(): None =>
+  fun poll_events(): None =>
     @glfwPollEvents()
 
-  fun glfwWaitEvents(): None =>
+  fun wait_events(): None =>
     @glfwWaitEvents()
 
-  fun glfwWaitEventsTimeout(timeout: F64): None =>
+  fun wait_events_timeout(timeout: F64): None =>
     @glfwWaitEventsTimeout(timeout)
 
-  fun glfwPostEmptyEvent(): None =>
+  fun post_empty_event(): None =>
     @glfwPostEmptyEvent()
 
-  fun glfwRawMouseMotionSupported(): I32 =>
+  fun raw_mouse_motion_supported(): I32 =>
     @glfwRawMouseMotionSupported()
 
-  fun glfwGetKeyName(key: I32, scancode: I32): String =>
+  fun get_key_name(key: I32, scancode: I32): String =>
     String.from_cstring(@glfwGetKeyName(key, scancode)).clone()
 
-  fun glfwGetKeyScancode(key: I32): I32 =>
+  fun get_key_scancode(key: I32): I32 =>
     @glfwGetKeyScancode(key)
 
-  fun glfwCreateCursor(image: NullablePointer[_GLFWimage] tag, xhot: I32, yhot: I32): NullablePointer[_GLFWcursor] =>
+  fun create_cursor(image: NullablePointer[_GLFWimage] tag, xhot: I32, yhot: I32): NullablePointer[_GLFWcursor] =>
     @glfwCreateCursor(image, xhot, yhot)
 
-  fun glfwCreateStandardCursor(shape: I32): NullablePointer[_GLFWcursor] =>
+  fun create_standard_cursor(shape: I32): NullablePointer[_GLFWcursor] =>
     @glfwCreateStandardCursor(shape)
 
-  fun glfwDestroyCursor(cursor: NullablePointer[_GLFWcursor] tag): None =>
+  fun destroy_cursor(cursor: NullablePointer[_GLFWcursor] tag): None =>
     @glfwDestroyCursor(cursor)
 
-  fun glfwJoystickPresent(jid: I32): I32 =>
+  fun joystick_present(jid: I32): I32 =>
     @glfwJoystickPresent(jid)
 
-  fun glfwGetJoystickAxes(jid: I32, count: Pointer[I32] tag): Pointer[F32] =>
+  fun get_joystick_axes(jid: I32, count: Pointer[I32] tag): Pointer[F32] =>
     @glfwGetJoystickAxes(jid, count)
 
-  fun glfwGetJoystickButtons(jid: I32, count: Pointer[I32] tag): String =>
+  fun get_joystick_buttons(jid: I32, count: Pointer[I32] tag): String =>
     String.from_cstring(@glfwGetJoystickButtons(jid, count)).clone()
 
-  fun glfwGetJoystickHats(jid: I32, count: Pointer[I32] tag): String =>
+  fun get_joystick_hats(jid: I32, count: Pointer[I32] tag): String =>
     String.from_cstring(@glfwGetJoystickHats(jid, count)).clone()
 
-  fun glfwGetJoystickName(jid: I32): String =>
+  fun get_joystick_name(jid: I32): String =>
     String.from_cstring(@glfwGetJoystickName(jid)).clone()
 
-  fun glfwGetJoystickGUID(jid: I32): String =>
+  fun get_joystick_guid(jid: I32): String =>
     String.from_cstring(@glfwGetJoystickGUID(jid)).clone()
 
-  fun glfwSetJoystickUserPointer(jid: I32, pointer: Pointer[None] tag): None =>
+  fun set_joystick_user_pointer(jid: I32, pointer: Pointer[None] tag): None =>
     @glfwSetJoystickUserPointer(jid, pointer)
 
-  fun glfwGetJoystickUserPointer(jid: I32): Pointer[None] =>
+  fun get_joystick_user_pointer(jid: I32): Pointer[None] =>
     @glfwGetJoystickUserPointer(jid)
 
-  fun glfwJoystickIsGamepad(jid: I32): I32 =>
+  fun joystick_is_gamepad(jid: I32): I32 =>
     @glfwJoystickIsGamepad(jid)
 
-  fun glfwSetJoystickCallback(callback: Pointer[None] tag) =>
+  fun set_joystick_callback(callback: Pointer[None] tag) =>
     @glfwSetJoystickCallback(callback)
 
-  fun glfwUpdateGamepadMappings(string: String): I32 =>
+  fun update_gamepad_mappings(string: String): I32 =>
     @glfwUpdateGamepadMappings(string.cstring())
 
-  fun glfwGetGamepadName(jid: I32): String =>
+  fun get_gamepad_name(jid: I32): String =>
     String.from_cstring(@glfwGetGamepadName(jid)).clone()
 
-  fun glfwGetGamepadState(jid: I32, state: NullablePointer[_GLFWgamepadstate] tag): I32 =>
+  fun get_gamepad_state(jid: I32, state: NullablePointer[_GLFWgamepadstate] tag): I32 =>
     @glfwGetGamepadState(jid, state)
 
-  fun glfwGetTime(): F64 =>
+  fun get_time(): F64 =>
     @glfwGetTime()
 
-  fun glfwSetTime(time: F64): None =>
+  fun set_time(time: F64): None =>
     @glfwSetTime(time)
 
-  fun glfwGetTimerValue(): U64 =>
+  fun get_timer_value(): U64 =>
     @glfwGetTimerValue()
 
-  fun glfwGetTimerFrequency(): U64 =>
+  fun get_timer_frequency(): U64 =>
     @glfwGetTimerFrequency()
 
-  fun glfwSwapInterval(interval: I32): None =>
+  fun swap_interval(interval: I32): None =>
     @glfwSwapInterval(interval)
 
-  fun glfwExtensionSupported(extension: String): I32 =>
+  fun extension_supported(extension: String): I32 =>
     @glfwExtensionSupported(extension.cstring())
 
-  fun glfwGetProcAddress(procname: String): Pointer[None] =>
+  fun get_proc_address(procname: String): Pointer[None] =>
     @glfwGetProcAddress(procname.cstring())
 
-  fun glfwVulkanSupported(): I32 =>
+  fun vulkan_supported(): I32 =>
     @glfwVulkanSupported()
 
-  fun glfwGetRequiredInstanceExtensions(count: Pointer[U32] tag): Pointer[Pointer[U8]] =>
+  fun get_required_instance_extensions(count: Pointer[U32] tag): Pointer[Pointer[U8]] =>
     @glfwGetRequiredInstanceExtensions(count)
 
