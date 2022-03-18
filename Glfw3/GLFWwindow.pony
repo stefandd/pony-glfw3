@@ -127,7 +127,7 @@ class GLFWWindow
     @glfwGetWindowUserPointer(window)._listener.joystick_callback(jid, event)
 
   fun should_close(): Bool =>
-    @glfwWindowShouldClose(_window) != 0
+    @glfwWindowShouldClose(_window) == GLFWTrue()
 
   fun set_should_close(value: Bool): None =>
     @glfwSetWindowShouldClose(_window, if value then 1 else 0 end)

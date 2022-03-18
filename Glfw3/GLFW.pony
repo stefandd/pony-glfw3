@@ -5,7 +5,7 @@ use @glfwTerminate[None]()
 use @glfwInitHint[None](hint: I32, value: I32)
 use @glfwGetVersion[None](major: Pointer[I32] tag, minor: Pointer[I32] tag, rev: Pointer[I32] tag)
 use @glfwGetVersionString[Pointer[U8]]()
-use @glfwGetError[I32](description: Pointer[Pointer[U8]] tag)
+use @glfwGetError[I32](description: Pointer[Pointer[U8 val] tag] tag)
 use @glfwSetErrorCallback[Pointer[None]](callback: Pointer[None] tag)
 use @glfwGetMonitors[Array[NullablePointer[_GLFWmonitor]]](count: Pointer[I32] tag)
 use @glfwGetPrimaryMonitor[NullablePointer[_GLFWmonitor]]()
@@ -445,14 +445,21 @@ primitive GLFW
   fun init_hint(hint: I32, value: I32): None =>
     @glfwInitHint(hint, value)
 
-  fun get_version(major: Pointer[I32] tag, minor: Pointer[I32] tag, rev: Pointer[I32] tag): None =>
-    @glfwGetVersion(major, minor, rev)
+  fun get_version(): (I32, I32, I32) =>
+    var major: I32 = -1
+    var minor: I32 = -1
+    var rev: I32 = -1
+    @glfwGetVersion(addressof major, addressof minor, addressof rev)
+    (major, minor, rev)
 
   fun get_version_string(): String =>
     String.from_cstring(@glfwGetVersionString()).clone()
 
-  fun get_error(description: Pointer[Pointer[U8]] tag): I32 =>
-    @glfwGetError(description)
+  fun get_error(): (I32, String) =>
+    var description: String = ""
+    var ptr = description.cstring()
+    var error_code = @glfwGetError(addressof ptr)
+    (error_code, description)
 
   fun set_error_callback(callback: Pointer[None] tag): Pointer[None] =>
     @glfwSetErrorCallback(callback)
