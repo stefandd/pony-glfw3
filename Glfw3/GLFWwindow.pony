@@ -2,6 +2,9 @@ class GLFWWindow
   let _window: NullablePointer[_GLFWwindow]
   var _listener: WindowListener box = DefaultWindowListener
 
+  new none() =>
+    _window = NullablePointer[_GLFWwindow].none()
+
   new create(width: I32, height: I32, title: String) =>
     _window = @glfwCreateWindow(width, height, title.cstring(), NullablePointer[_GLFWmonitor].none(), NullablePointer[_GLFWwindow].none())
     @glfwSetWindowUserPointer(_window, this)
@@ -18,19 +21,19 @@ class GLFWWindow
   fun enable_key_callback() =>
     @glfwSetKeyCallback(_window, addressof _keyCallback)
 
-  fun @_keyCallback(window: NullablePointer[_GLFWwindow] tag, key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) =>
+  fun @_keyCallback(window: NullablePointer[_GLFWwindow] tag, key: I32 val, scancode: I32 val, action: I32 val, mods: I32 val) =>
     @glfwGetWindowUserPointer(window)._listener.key_callback(key, scancode, action, mods)
 
   fun enable_pos_callback() =>
     @glfwSetWindowPosCallback(_window, addressof _windowPosCallback)
 
-  fun @_windowPosCallback(window: NullablePointer[_GLFWwindow] tag, xpos: I64 val, ypos: I64 val) =>
+  fun @_windowPosCallback(window: NullablePointer[_GLFWwindow] tag, xpos: I32 val, ypos: I32 val) =>
     @glfwGetWindowUserPointer(window)._listener.pos_callback(xpos, ypos)
 
   fun enable_size_callback() =>
     @glfwSetWindowSizeCallback(_window, addressof _windowSizeCallback)
 
-  fun @_windowSizeCallback(window: NullablePointer[_GLFWwindow] tag, width: I64 val, height: I64 val) =>
+  fun @_windowSizeCallback(window: NullablePointer[_GLFWwindow] tag, width: I32 val, height: I32 val) =>
     @glfwGetWindowUserPointer(window)._listener.size_callback(width, height)
 
   fun enable_close_callback() =>
@@ -48,79 +51,79 @@ class GLFWWindow
   fun enable_focus_callback() =>
     @glfwSetWindowFocusCallback(_window, addressof _windowFocusCallback)
 
-  fun @_windowFocusCallback(window: NullablePointer[_GLFWwindow] tag, focused: I64) =>
+  fun @_windowFocusCallback(window: NullablePointer[_GLFWwindow] tag, focused: I32) =>
     @glfwGetWindowUserPointer(window)._listener.focus_callback(focused)
 
   fun enable_iconify_callback() =>
     @glfwSetWindowIconifyCallback(_window, addressof _windowIconifyCallback)
 
-  fun @_windowIconifyCallback(window: NullablePointer[_GLFWwindow] tag, iconified: I64) =>
+  fun @_windowIconifyCallback(window: NullablePointer[_GLFWwindow] tag, iconified: I32) =>
     @glfwGetWindowUserPointer(window)._listener.iconify_callback(iconified)
 
   fun enable_maximize_callback() =>
     @glfwSetWindowMaximizeCallback(_window, addressof _windowMaximizeCallback)
 
-  fun @_windowMaximizeCallback(window: NullablePointer[_GLFWwindow] tag, maximized: I64) =>
+  fun @_windowMaximizeCallback(window: NullablePointer[_GLFWwindow] tag, maximized: I32) =>
     @glfwGetWindowUserPointer(window)._listener.maximize_callback(maximized)
 
   fun framebuffer_size_callback() =>
     @glfwSetFramebufferSizeCallback(_window, addressof _framebufferSizeCallback)
 
-  fun @_framebufferSizeCallback(window: NullablePointer[_GLFWwindow] tag, width: I64, height: I64) =>
+  fun @_framebufferSizeCallback(window: NullablePointer[_GLFWwindow] tag, width: I32, height: I32) =>
     @glfwGetWindowUserPointer(window)._listener.framebuffer_size_callback(width, height)
 
   fun enable_content_scale_callback() =>
     @glfwSetWindowContentScaleCallback(_window, addressof _windowContentScaleCallback)
 
-  fun @_windowContentScaleCallback(window: NullablePointer[_GLFWwindow] tag, xscale: F64, yscale: F64) =>
+  fun @_windowContentScaleCallback(window: NullablePointer[_GLFWwindow] tag, xscale: F32, yscale: F32) =>
     @glfwGetWindowUserPointer(window)._listener.content_scale_callback(xscale, yscale)
 
   fun enable_char_callback() =>
     @glfwSetCharCallback(_window, addressof _charCallback)
 
-  fun @_charCallback(window: NullablePointer[_GLFWwindow] tag, codepoint: U64) =>
+  fun @_charCallback(window: NullablePointer[_GLFWwindow] tag, codepoint: U32) =>
     @glfwGetWindowUserPointer(window)._listener.char_callback(codepoint)
 
   fun enable_char_mods_callback() =>
     @glfwSetCharModsCallback(_window, addressof _charModsCallback)
 
-  fun @_charModsCallback(window: NullablePointer[_GLFWwindow] tag, codepoint: U64, mods: I64) =>
+  fun @_charModsCallback(window: NullablePointer[_GLFWwindow] tag, codepoint: U32, mods: I32) =>
     @glfwGetWindowUserPointer(window)._listener.char_mods_callback(codepoint, mods)
 
   fun enable_mouse_button_callback() =>
     @glfwSetMouseButtonCallback(_window, addressof _mouseButtonCallback)
 
-  fun @_mouseButtonCallback(window: NullablePointer[_GLFWwindow] tag, button: I64, action: I64, mods: I64) =>
+  fun @_mouseButtonCallback(window: NullablePointer[_GLFWwindow] tag, button: I32, action: I32, mods: I32) =>
     @glfwGetWindowUserPointer(window)._listener.mouse_button_callback(button, action, mods)
 
   fun enable_cursor_pos_callback() =>
     @glfwSetCursorPosCallback(_window, addressof _cursorPosCallback)
 
-  fun @_cursorPosCallback(window: NullablePointer[_GLFWwindow] tag, xpos: F64, ypos: F64) =>
+  fun @_cursorPosCallback(window: NullablePointer[_GLFWwindow] tag, xpos: F32, ypos: F32) =>
     @glfwGetWindowUserPointer(window)._listener.cursor_pos_callback(xpos, ypos)
 
   fun enable_cursor_enter_callback() =>
     @glfwSetCursorEnterCallback(_window, addressof _cursorEnterCallback)
 
-  fun @_cursorEnterCallback(window: NullablePointer[_GLFWwindow] tag, entered: I64) =>
+  fun @_cursorEnterCallback(window: NullablePointer[_GLFWwindow] tag, entered: I32) =>
     @glfwGetWindowUserPointer(window)._listener.cursor_enter_callback(entered)
 
   fun enable_scroll_callback() =>
     @glfwSetScrollCallback(_window, addressof _scrollCallback)
 
-  fun @_scrollCallback(window: NullablePointer[_GLFWwindow] tag, xoffset: F64, yoffset: F64) =>
+  fun @_scrollCallback(window: NullablePointer[_GLFWwindow] tag, xoffset: F32, yoffset: F32) =>
     @glfwGetWindowUserPointer(window)._listener.scroll_callback(xoffset, yoffset)
 
   fun enable_drop_callback() =>
     @glfwSetDropCallback(_window, addressof _dropCallback)
 
-  fun @_dropCallback(window: NullablePointer[_GLFWwindow] tag, path_count: I64, paths: Pointer[U8]) =>
+  fun @_dropCallback(window: NullablePointer[_GLFWwindow] tag, path_count: I32, paths: Pointer[U8]) =>
     @glfwGetWindowUserPointer(window)._listener.drop_callback(path_count, String.from_cstring(paths).clone())
 
   fun enable_joystick_callback() =>
     @glfwSetDropCallback(_window, addressof _joystickCallback)
 
-  fun @_joystickCallback(window: NullablePointer[_GLFWwindow] tag, jid: I64, event: I64) =>
+  fun @_joystickCallback(window: NullablePointer[_GLFWwindow] tag, jid: I32, event: I32) =>
     @glfwGetWindowUserPointer(window)._listener.joystick_callback(jid, event)
 
   fun should_close(): Bool =>
@@ -232,13 +235,13 @@ class GLFWWindow
   fun get_mouse_button(button: I32): I32 =>
     @glfwGetMouseButton(_window, button)
 
-  fun get_cursor_pos(): (F64, F64) =>
-    var xpos: F64 = 0
-    var ypos: F64 = 0
+  fun get_cursor_pos(): (F32, F32) =>
+    var xpos: F32 = 0
+    var ypos: F32 = 0
     @glfwGetCursorPos(_window, addressof xpos, addressof ypos)
     (xpos, ypos)
 
-  fun set_cursor_pos(xpos: F64, ypos: F64): None =>
+  fun set_cursor_pos(xpos: F32, ypos: F32): None =>
     @glfwSetCursorPos(_window, xpos, ypos)
 
   // TODO: take a Cursor object
@@ -258,24 +261,24 @@ class GLFWWindow
     @glfwSwapBuffers(_window)
 
 interface WindowListener
-  fun pos_callback(xpos: I64 val, ypos: I64 val) => None
-  fun size_callback(width: I64 val, height: I64 val) => None
+  fun pos_callback(xpos: I32 val, ypos: I32 val) => None
+  fun size_callback(width: I32 val, height: I32 val) => None
   fun close_callback() => None
   fun refresh_callback() => None
-  fun focus_callback(focused: I64) => None
-  fun iconify_callback(iconified: I64) => None
-  fun maximize_callback(maximized: I64) => None
-  fun framebuffer_size_callback(width: I64, height: I64) => None
-  fun content_scale_callback(xscale: F64, yscale: F64) => None
-  fun key_callback(key: I64 val, scancode: I64 val, action: I64 val, mods: I64 val) => None
-  fun char_callback(codepoint: U64) => None
-  fun char_mods_callback(codepoint: U64, mods: I64) => None
-  fun mouse_button_callback(button: I64, action: I64, mods: I64) => None
-  fun cursor_pos_callback(xpos: F64, ypos: F64) => None
-  fun cursor_enter_callback(entered: I64) => None
-  fun scroll_callback(xoffset: F64, yoffset: F64) => None
-  fun drop_callback(path_count: I64, paths: String) => None
-  fun joystick_callback(jid: I64, event: I64) => None
+  fun focus_callback(focused: I32) => None
+  fun iconify_callback(iconified: I32) => None
+  fun maximize_callback(maximized: I32) => None
+  fun framebuffer_size_callback(width: I32, height: I32) => None
+  fun content_scale_callback(xscale: F32, yscale: F32) => None
+  fun key_callback(key: I32 val, scancode: I32 val, action: I32 val, mods: I32 val) => None
+  fun char_callback(codepoint: U32) => None
+  fun char_mods_callback(codepoint: U32, mods: I32) => None
+  fun mouse_button_callback(button: I32, action: I32, mods: I32) => None
+  fun cursor_pos_callback(xpos: F32, ypos: F32) => None
+  fun cursor_enter_callback(entered: I32) => None
+  fun scroll_callback(xoffset: F32, yoffset: F32) => None
+  fun drop_callback(path_count: I32, paths: String) => None
+  fun joystick_callback(jid: I32, event: I32) => None
 
 class DefaultWindowListener is WindowListener
 

@@ -66,7 +66,7 @@ use @glfwSetFramebufferSizeCallback[Pointer[None]](window: NullablePointer[_GLFW
 use @glfwSetWindowContentScaleCallback[Pointer[None]](window: NullablePointer[_GLFWwindow] tag, callback: Pointer[None] tag)
 use @glfwPollEvents[None]()
 use @glfwWaitEvents[None]()
-use @glfwWaitEventsTimeout[None](timeout: F64)
+use @glfwWaitEventsTimeout[None](timeout: F32)
 use @glfwPostEmptyEvent[None]()
 use @glfwGetInputMode[I32](window: NullablePointer[_GLFWwindow] tag, mode: I32)
 use @glfwSetInputMode[None](window: NullablePointer[_GLFWwindow] tag, mode: I32, value: I32)
@@ -75,8 +75,8 @@ use @glfwGetKeyName[Pointer[U8]](key: I32, scancode: I32)
 use @glfwGetKeyScancode[I32](key: I32)
 use @glfwGetKey[I32](window: NullablePointer[_GLFWwindow] tag, key: I32)
 use @glfwGetMouseButton[I32](window: NullablePointer[_GLFWwindow] tag, button: I32)
-use @glfwGetCursorPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: Pointer[F64] tag, ypos: Pointer[F64] tag)
-use @glfwSetCursorPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: F64, ypos: F64)
+use @glfwGetCursorPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: Pointer[F32] tag, ypos: Pointer[F32] tag)
+use @glfwSetCursorPos[None](window: NullablePointer[_GLFWwindow] tag, xpos: F32, ypos: F32)
 use @glfwCreateCursor[NullablePointer[_GLFWcursor]](image: NullablePointer[_GLFWimage] tag, xhot: I32, yhot: I32)
 use @glfwCreateStandardCursor[NullablePointer[_GLFWcursor]](shape: I32)
 use @glfwDestroyCursor[None](cursor: NullablePointer[_GLFWcursor] tag)
@@ -104,10 +104,10 @@ use @glfwGetGamepadName[Pointer[U8]](jid: I32)
 use @glfwGetGamepadState[I32](jid: I32, state: NullablePointer[_GLFWgamepadstate] tag)
 use @glfwSetClipboardString[None](window: NullablePointer[_GLFWwindow] tag, string: Pointer[U8] tag)
 use @glfwGetClipboardString[Pointer[U8]](window: NullablePointer[_GLFWwindow] tag)
-use @glfwGetTime[F64]()
-use @glfwSetTime[None](time: F64)
-use @glfwGetTimerValue[U64]()
-use @glfwGetTimerFrequency[U64]()
+use @glfwGetTime[F32]()
+use @glfwSetTime[None](time: F32)
+use @glfwGetTimerValue[U32]()
+use @glfwGetTimerFrequency[U32]()
 use @glfwMakeContextCurrent[None](window: NullablePointer[_GLFWwindow] tag)
 use @glfwGetCurrentContext[NullablePointer[_GLFWwindow]]()
 use @glfwSwapBuffers[None](window: NullablePointer[_GLFWwindow] tag)
@@ -144,191 +144,298 @@ struct _GLFWcursor
 struct _GLFWwindow
 struct _GLFWmonitor
 
+primitive GLFWTrue  fun apply(): I32 => 1
+primitive GLFWFalse fun apply(): I32 => 0
+
+primitive GLFWRelease fun apply(): I32 => 0
+primitive GLFWPress   fun apply(): I32 => 1
+primitive GLFWRepeat  fun apply(): I32 => 2
+
+primitive GLFWHatCentered  fun apply(): I32 => 0
+primitive GLFWHatUp        fun apply(): I32 => 1
+primitive GLFWHatRight     fun apply(): I32 => 2
+primitive GLFWHatDown      fun apply(): I32 => 4
+primitive GLFWHatLeft      fun apply(): I32 => 8
+primitive GLFWHatRightUp   fun apply(): I32 => (GLFWHatRight().op_or(GLFWHatUp()))
+primitive GLFWHatRightDown fun apply(): I32 => (GLFWHatRight().op_or(GLFWHatDown()))
+primitive GLFWHatLeftUp    fun apply(): I32 => (GLFWHatLeft().op_or(GLFWHatUp()))
+primitive GLFWHatLeftDown  fun apply(): I32 => (GLFWHatLeft().op_or(GLFWHatDown()))
+
+primitive GLFWNoError            fun apply(): I32 => 0
+primitive GLFWNotInitialized     fun apply(): I32 => 0x00010001
+primitive GLFWNoCurrentContext   fun apply(): I32 => 0x00010002
+primitive GLFWInvalidEnum        fun apply(): I32 => 0x00010003
+primitive GLFWInvalidValue       fun apply(): I32 => 0x00010004
+primitive GLFWOutOfMemory        fun apply(): I32 => 0x00010005
+primitive GLFWApiUnavailable     fun apply(): I32 => 0x00010006
+primitive GLFWVersionUnavailable fun apply(): I32 => 0x00010007
+primitive GLFWPlatformError      fun apply(): I32 => 0x00010008
+primitive GLFWFormatUnavailable  fun apply(): I32 => 0x00010009
+primitive GLFWNoWindowContext    fun apply(): I32 => 0x0001000A
+
+primitive GLFWFocused                fun apply(): I32 => 0x00020001
+primitive GLFWIconified              fun apply(): I32 => 0x00020002
+primitive GLFWResizable              fun apply(): I32 => 0x00020003
+primitive GLFWVisible                fun apply(): I32 => 0x00020004
+primitive GLFWDecorated              fun apply(): I32 => 0x00020005
+primitive GLFWAutoIconify            fun apply(): I32 => 0x00020006
+primitive GLFWFloating               fun apply(): I32 => 0x00020007
+primitive GLFWMaximized              fun apply(): I32 => 0x00020008
+primitive GLFWCenterCursor           fun apply(): I32 => 0x00020009
+primitive GLFWTransparentFramebuffer fun apply(): I32 => 0x0002000A
+primitive GLFWHovered                fun apply(): I32 => 0x0002000B
+primitive GLFWFocusOnShow            fun apply(): I32 => 0x0002000C
+
+primitive GLFWRedBits        fun apply(): I32 => 0x00021001
+primitive GLFWGreenBits      fun apply(): I32 => 0x00021002
+primitive GLFWBlueBits       fun apply(): I32 => 0x00021003
+primitive GLFWAlphaBits      fun apply(): I32 => 0x00021004
+primitive GLFWDepthBits      fun apply(): I32 => 0x00021005
+primitive GLFWStencilBits    fun apply(): I32 => 0x00021006
+primitive GLFWAccumRedBits   fun apply(): I32 => 0x00021007
+primitive GLFWAccumGreenBits fun apply(): I32 => 0x00021008
+primitive GLFWAccumBlueBits  fun apply(): I32 => 0x00021009
+primitive GLFWAccumAlphaBits fun apply(): I32 => 0x0002100A
+primitive GLFWAuxBuffers     fun apply(): I32 => 0x0002100B
+primitive GLFWStereo         fun apply(): I32 => 0x0002100C
+primitive GLFWSamples        fun apply(): I32 => 0x0002100D
+primitive GLFWSrgbCapable    fun apply(): I32 => 0x0002100E
+primitive GLFWRefreshRate    fun apply(): I32 => 0x0002100F
+primitive GLFWDoublebuffer   fun apply(): I32 => 0x00021010
+
+primitive GLFWClientApi              fun apply(): I32 => 0x00022001
+primitive GLFWContextVersionMajor    fun apply(): I32 => 0x00022002
+primitive GLFWContextVersionMinor    fun apply(): I32 => 0x00022003
+primitive GLFWContextRevision        fun apply(): I32 => 0x00022004
+primitive GLFWContextRobustness      fun apply(): I32 => 0x00022005
+primitive GLFWOpenglForwardCompat    fun apply(): I32 => 0x00022006
+primitive GLFWOpenglDebugContext     fun apply(): I32 => 0x00022007
+primitive GLFWOpenglProfile          fun apply(): I32 => 0x00022008
+primitive GLFWContextReleaseBehavior fun apply(): I32 => 0x00022009
+primitive GLFWContextNoError         fun apply(): I32 => 0x0002200A
+primitive GLFWContextCreationApi     fun apply(): I32 => 0x0002200B
+primitive GLFWScaleToMonitor         fun apply(): I32 => 0x0002200C
+primitive GLFWCocoaRetinaFramebuffer fun apply(): I32 => 0x00023001
+primitive GLFWCocoaFrameName         fun apply(): I32 => 0x00023002
+primitive GLFWCocoaGraphicsSwitching fun apply(): I32 => 0x00023003
+primitive GLFWX11ClassName           fun apply(): I32 => 0x00024001
+primitive GLFWX11InstanceName        fun apply(): I32 => 0x00024002
+
+primitive GLFWNoApi       fun apply(): I32 => 0
+primitive GLFWOpenglApi   fun apply(): I32 => 0x00030001
+primitive GLFWOpenglEsApi fun apply(): I32 => 0x00030002
+
+primitive GLFWNoRobustness        fun apply(): I32 => 0
+primitive GLFWNoResetNotification fun apply(): I32 => 0x00031001
+primitive GLFWLoseContextOnReset  fun apply(): I32 => 0x00031002
+
+primitive GLFWOpenglAnyProfile    fun apply(): I32 => 0
+primitive GLFWOpenglCoreProfile   fun apply(): I32 => 0x00032001
+primitive GLFWOpenglCompatProfile fun apply(): I32 => 0x00032002
+
+primitive GLFWCursor             fun apply(): I32 => 0x00033001
+primitive GLFWStickyKeys         fun apply(): I32 => 0x00033002
+primitive GLFWStickyMouseButtons fun apply(): I32 => 0x00033003
+primitive GLFWLockKeyMods        fun apply(): I32 => 0x00033004
+primitive GLFWRawMouseMotion     fun apply(): I32 => 0x00033005
+
+primitive GLFWCursorNormal   fun apply(): I32 => 0x00034001
+primitive GLFWCursorHidden   fun apply(): I32 => 0x00034002
+primitive GLFWCursorDisabled fun apply(): I32 => 0x00034003
+
+primitive GLFWAnyReleaseBehavior   fun apply(): I32 => 0
+primitive GLFWReleaseBehaviorFlush fun apply(): I32 => 0x00035001
+primitive GLFWReleaseBehaviorNone  fun apply(): I32 => 0x00035002
+
+primitive GLFWNativeContextApi fun apply(): I32 => 0x00036001
+primitive GLFWEglContextApi    fun apply(): I32 => 0x00036002
+primitive GLFWOsmesaContextApi fun apply(): I32 => 0x00036003
+
+primitive GLFWArrowCursor     fun apply(): I32 => 0x00036001
+primitive GLFWIbeamCursor     fun apply(): I32 => 0x00036002
+primitive GLFWCrosshairCursor fun apply(): I32 => 0x00036003
+primitive GLFWHandCursor      fun apply(): I32 => 0x00036004
+primitive GLFWHresizeCursor   fun apply(): I32 => 0x00036005
+primitive GLFWVresizeCursor   fun apply(): I32 => 0x00036006
+
+primitive GLFWConnected    fun apply(): I32 => 0x00040001
+primitive GLFWDisconnected fun apply(): I32 => 0x00040002
+
+primitive GLFWJoystickHatButtons  fun apply(): I32 => 0x00050001
+primitive GLFWCocoaChdirResources fun apply(): I32 => 0x00051001
+primitive GLFWCocoaMenubar        fun apply(): I32 => 0x00051002
+
+primitive GLFWDontCare fun apply(): I32 => -1
+
+primitive GLFWKeyUnknown fun apply(): I32 => -1
+
+primitive GLFWKeySpace fun apply(): I32 => 32
+primitive GLFWKey0     fun apply(): I32 => 48
+primitive GLFWKey1     fun apply(): I32 => 49
+primitive GLFWKey2     fun apply(): I32 => 50
+primitive GLFWKey3     fun apply(): I32 => 51
+primitive GLFWKey4     fun apply(): I32 => 52
+primitive GLFWKey5     fun apply(): I32 => 53
+primitive GLFWKey6     fun apply(): I32 => 54
+primitive GLFWKey7     fun apply(): I32 => 55
+primitive GLFWKey8     fun apply(): I32 => 56
+primitive GLFWKey9     fun apply(): I32 => 57
+primitive GLFWKeyA     fun apply(): I32 => 65
+primitive GLFWKeyB     fun apply(): I32 => 66
+primitive GLFWKeyC     fun apply(): I32 => 67
+primitive GLFWKeyD     fun apply(): I32 => 68
+primitive GLFWKeyE     fun apply(): I32 => 69
+primitive GLFWKeyF     fun apply(): I32 => 70
+primitive GLFWKeyG     fun apply(): I32 => 71
+primitive GLFWKeyH     fun apply(): I32 => 72
+primitive GLFWKeyI     fun apply(): I32 => 73
+primitive GLFWKeyJ     fun apply(): I32 => 74
+primitive GLFWKeyK     fun apply(): I32 => 75
+primitive GLFWKeyL     fun apply(): I32 => 76
+primitive GLFWKeyM     fun apply(): I32 => 77
+primitive GLFWKeyN     fun apply(): I32 => 78
+primitive GLFWKeyO     fun apply(): I32 => 79
+primitive GLFWKeyP     fun apply(): I32 => 80
+primitive GLFWKeyQ     fun apply(): I32 => 81
+primitive GLFWKeyR     fun apply(): I32 => 82
+primitive GLFWKeyS     fun apply(): I32 => 83
+primitive GLFWKeyT     fun apply(): I32 => 84
+primitive GLFWKeyU     fun apply(): I32 => 85
+primitive GLFWKeyV     fun apply(): I32 => 86
+primitive GLFWKeyW     fun apply(): I32 => 87
+primitive GLFWKeyX     fun apply(): I32 => 88
+primitive GLFWKeyY     fun apply(): I32 => 89
+primitive GLFWKeyZ     fun apply(): I32 => 90
+
+primitive GLFWKeyEscape       fun apply(): I32 => 256
+primitive GLFWKeyEnter        fun apply(): I32 => 257
+primitive GLFWKeyTab          fun apply(): I32 => 258
+primitive GLFWKeyBackspace    fun apply(): I32 => 259
+primitive GLFWKeyInsert       fun apply(): I32 => 260
+primitive GLFWKeyDelete       fun apply(): I32 => 261
+primitive GLFWKeyRight        fun apply(): I32 => 262
+primitive GLFWKeyLeft         fun apply(): I32 => 263
+primitive GLFWKeyDown         fun apply(): I32 => 232
+primitive GLFWKeyUp           fun apply(): I32 => 265
+primitive GLFWKeyPageUp       fun apply(): I32 => 266
+primitive GLFWKeyPageDown     fun apply(): I32 => 267
+primitive GLFWKeyHome         fun apply(): I32 => 268
+primitive GLFWKeyEnd          fun apply(): I32 => 269
+primitive GLFWKeyCapsLock     fun apply(): I32 => 280
+primitive GLFWKeyScrollLock   fun apply(): I32 => 281
+primitive GLFWKeyNumLock      fun apply(): I32 => 282
+primitive GLFWKeyPrintScreen  fun apply(): I32 => 283
+primitive GLFWKeyPause        fun apply(): I32 => 284
+primitive GLFWKeyF1           fun apply(): I32 => 290
+primitive GLFWKeyF2           fun apply(): I32 => 291
+primitive GLFWKeyF3           fun apply(): I32 => 292
+primitive GLFWKeyF4           fun apply(): I32 => 293
+primitive GLFWKeyF5           fun apply(): I32 => 294
+primitive GLFWKeyF6           fun apply(): I32 => 295
+primitive GLFWKeyF7           fun apply(): I32 => 296
+primitive GLFWKeyF8           fun apply(): I32 => 297
+primitive GLFWKeyF9           fun apply(): I32 => 298
+primitive GLFWKeyF10          fun apply(): I32 => 299
+primitive GLFWKeyF11          fun apply(): I32 => 300
+primitive GLFWKeyF12          fun apply(): I32 => 301
+primitive GLFWKeyF13          fun apply(): I32 => 302
+primitive GLFWKeyF14          fun apply(): I32 => 303
+primitive GLFWKeyF15          fun apply(): I32 => 304
+primitive GLFWKeyF16          fun apply(): I32 => 305
+primitive GLFWKeyF17          fun apply(): I32 => 306
+primitive GLFWKeyF18          fun apply(): I32 => 307
+primitive GLFWKeyF19          fun apply(): I32 => 308
+primitive GLFWKeyF20          fun apply(): I32 => 309
+primitive GLFWKeyF21          fun apply(): I32 => 310
+primitive GLFWKeyF22          fun apply(): I32 => 311
+primitive GLFWKeyF23          fun apply(): I32 => 312
+primitive GLFWKeyF24          fun apply(): I32 => 313
+primitive GLFWKeyF25          fun apply(): I32 => 314
+primitive GLFWKeyKp0          fun apply(): I32 => 320
+primitive GLFWKeyKp1          fun apply(): I32 => 321
+primitive GLFWKeyKp2          fun apply(): I32 => 322
+primitive GLFWKeyKp3          fun apply(): I32 => 323
+primitive GLFWKeyKp4          fun apply(): I32 => 324
+primitive GLFWKeyKp5          fun apply(): I32 => 325
+primitive GLFWKeyKp6          fun apply(): I32 => 326
+primitive GLFWKeyKp7          fun apply(): I32 => 327
+primitive GLFWKeyKp8          fun apply(): I32 => 328
+primitive GLFWKeyKp9          fun apply(): I32 => 329
+primitive GLFWKeyKpDecimal    fun apply(): I32 => 330
+primitive GLFWKeyKpDivide     fun apply(): I32 => 331
+primitive GLFWKeyKpMultiply   fun apply(): I32 => 332
+primitive GLFWKeyKpSubtract   fun apply(): I32 => 333
+primitive GLFWKeyKpAdd        fun apply(): I32 => 334
+primitive GLFWKeyKpEnter      fun apply(): I32 => 335
+primitive GLFWKeyKpEqual      fun apply(): I32 => 336
+primitive GLFWKeyLeftShift    fun apply(): I32 => 340
+primitive GLFWKeyLeftControl  fun apply(): I32 => 341
+primitive GLFWKeyLeftAlt      fun apply(): I32 => 342
+primitive GLFWKeyLeftSuper    fun apply(): I32 => 343
+primitive GLFWKeyRightShift   fun apply(): I32 => 344
+primitive GLFWKeyRightControl fun apply(): I32 => 345
+primitive GLFWKeyRightAlt     fun apply(): I32 => 346
+primitive GLFWKeyRightSuper   fun apply(): I32 => 347
+primitive GLFWKeyMenu         fun apply(): I32 => 348
+
+primitive GLFWMouseButton1      fun apply(): I32 => 0
+primitive GLFWMouseButton2      fun apply(): I32 => 1
+primitive GLFWMouseButton3      fun apply(): I32 => 2
+primitive GLFWMouseButton4      fun apply(): I32 => 3
+primitive GLFWMouseButton5      fun apply(): I32 => 4
+primitive GLFWMouseButton6      fun apply(): I32 => 5
+primitive GLFWMouseButton7      fun apply(): I32 => 6
+primitive GLFWMouseButton8      fun apply(): I32 => 7
+primitive GLFWMouseButtonLast   fun apply(): I32 => GLFWMouseButton8()
+primitive GLFWMouseButtonLeft   fun apply(): I32 => GLFWMouseButton1()
+primitive GLFWMouseButtonRight  fun apply(): I32 => GLFWMouseButton2()
+primitive GLFWMouseButtonMiddle fun apply(): I32 => GLFWMouseButton3()
+
+primitive GLFWGamepadButtonA           fun apply(): I32 => 0
+primitive GLFWGamepadButtonB           fun apply(): I32 => 1
+primitive GLFWGamepadButtonX           fun apply(): I32 => 2
+primitive GLFWGamepadButtonY           fun apply(): I32 => 3
+primitive GLFWGamepadButtonLeftBumper  fun apply(): I32 => 4
+primitive GLFWGamepadButtonRightBumper fun apply(): I32 => 5
+primitive GLFWGamepadButtonBack        fun apply(): I32 => 6
+primitive GLFWGamepadButtonStart       fun apply(): I32 => 7
+primitive GLFWGamepadButtonGuide       fun apply(): I32 => 8
+primitive GLFWGamepadButtonLeftThumb   fun apply(): I32 => 9
+primitive GLFWGamepadButtonRightThumb  fun apply(): I32 => 10
+primitive GLFWGamepadButtonDpadUp      fun apply(): I32 => 11
+primitive GLFWGamepadButtonDpadRight   fun apply(): I32 => 12
+primitive GLFWGamepadButtonDpadDown    fun apply(): I32 => 13
+primitive GLFWGamepadButtonDpadLeft    fun apply(): I32 => 14
+primitive GLFWGamepadButtonLast        fun apply(): I32 => GLFWGamepadButtonDpadLeft()
+primitive GLFWGamepadButtonCross       fun apply(): I32 => GLFWGamepadButtonA()
+primitive GLFWGamepadButtonCircle      fun apply(): I32 => GLFWGamepadButtonB()
+primitive GLFWGamepadButtonSquare      fun apply(): I32 => GLFWGamepadButtonX()
+primitive GLFWGamepadButtonTriangle    fun apply(): I32 => GLFWGamepadButtonY()
+primitive GLFWGamepadAxisLeftX         fun apply(): I32 => 0
+primitive GLFWGamepadAxisLeftY         fun apply(): I32 => 1
+primitive GLFWGamepadAxisRightX        fun apply(): I32 => 2
+primitive GLFWGamepadAxisRightY        fun apply(): I32 => 3
+primitive GLFWGamepadAxisLeftTrigger   fun apply(): I32 => 4
+primitive GLFWGamepadAxisRightTrigger  fun apply(): I32 => 5
+
+primitive GLFWJoystick1  fun apply(): I32 => 0
+primitive GLFWJoystick2  fun apply(): I32 => 1
+primitive GLFWJoystick3  fun apply(): I32 => 2
+primitive GLFWJoystick4  fun apply(): I32 => 3
+primitive GLFWJoystick5  fun apply(): I32 => 4
+primitive GLFWJoystick6  fun apply(): I32 => 5
+primitive GLFWJoystick7  fun apply(): I32 => 6
+primitive GLFWJoystick8  fun apply(): I32 => 7
+primitive GLFWJoystick9  fun apply(): I32 => 8
+primitive GLFWJoystick10 fun apply(): I32 => 9
+primitive GLFWJoystick11 fun apply(): I32 => 10
+primitive GLFWJoystick12 fun apply(): I32 => 11
+primitive GLFWJoystick13 fun apply(): I32 => 12
+primitive GLFWJoystick14 fun apply(): I32 => 13
+primitive GLFWJoystick15 fun apply(): I32 => 14
+primitive GLFWJoystick16 fun apply(): I32 => 15
+
 primitive GLFW
-
-  fun key_unknown(): I64 => -1
-
-  /* Printable keys */
-  fun key_space(): I64 => 32
-  fun key_apostrophe(): I64 => 39  /* ' */
-  fun key_comma(): I64 => 44  /* , */
-  fun key_minus(): I64 => 45  /* - */
-  fun key_period(): I64 => 46  /* . */
-  fun key_slash(): I64 => 47  /* / */
-  fun key_0(): I64 => 48
-  fun key_1(): I64 => 49
-  fun key_2(): I64 => 50
-  fun key_3(): I64 => 51
-  fun key_4(): I64 => 52
-  fun key_5(): I64 => 53
-  fun key_6(): I64 => 54
-  fun key_7(): I64 => 55
-  fun key_8(): I64 => 56
-  fun key_9(): I64 => 57
-  fun key_semicolon(): I64 => 59  /* ; */
-  fun key_equal(): I64 => 61  /* = */
-  fun key_a(): I64 => 65
-  fun key_b(): I64 => 66
-  fun key_c(): I64 => 67
-  fun key_d(): I64 => 68
-  fun key_e(): I64 => 69
-  fun key_f(): I64 => 70
-  fun key_g(): I64 => 71
-  fun key_h(): I64 => 72
-  fun key_i(): I64 => 73
-  fun key_j(): I64 => 74
-  fun key_k(): I64 => 75
-  fun key_l(): I64 => 76
-  fun key_m(): I64 => 77
-  fun key_n(): I64 => 78
-  fun key_o(): I64 => 79
-  fun key_p(): I64 => 80
-  fun key_q(): I64 => 81
-  fun key_r(): I64 => 82
-  fun key_s(): I64 => 83
-  fun key_t(): I64 => 84
-  fun key_u(): I64 => 85
-  fun key_v(): I64 => 86
-  fun key_w(): I64 => 87
-  fun key_x(): I64 => 88
-  fun key_y(): I64 => 89
-  fun key_z(): I64 => 90
-  fun key_left_bracket(): I64 => 91  /* [ */
-  fun key_backslash(): I64 => 92  /* \ */
-  fun key_right_bracket(): I64 => 93  /* ] */
-  fun key_grave_accent(): I64 => 96  /* ` */
-  fun key_world_1(): I64 => 161 /* non-US #1 */
-  fun key_world_2(): I64 => 162 /* non-US #2 */
-
-  /* Function keys */
-  fun key_escape(): I64 => 256
-  fun key_enter(): I64 => 257
-  fun key_tab(): I64 => 258
-  fun key_backspace(): I64 => 259
-  fun key_insert(): I64 => 260
-  fun key_delete(): I64 => 261
-  fun key_right(): I64 => 262
-  fun key_left(): I64 => 263
-  fun key_down(): I64 => 264
-  fun key_up(): I64 => 265
-  fun key_page_up(): I64 => 266
-  fun key_page_down(): I64 => 267
-  fun key_home(): I64 => 268
-  fun key_end(): I64 => 269
-  fun key_caps_lock(): I64 => 280
-  fun key_scroll_lock(): I64 => 281
-  fun key_num_lock(): I64 => 282
-  fun key_print_screen(): I64 => 283
-  fun key_pause(): I64 => 284
-  fun key_f1(): I64 => 290
-  fun key_f2(): I64 => 291
-  fun key_f3(): I64 => 292
-  fun key_f4(): I64 => 293
-  fun key_f5(): I64 => 294
-  fun key_f6(): I64 => 295
-  fun key_f7(): I64 => 296
-  fun key_f8(): I64 => 297
-  fun key_f9(): I64 => 298
-  fun key_f10(): I64 => 299
-  fun key_f11(): I64 => 300
-  fun key_f12(): I64 => 301
-  fun key_f13(): I64 => 302
-  fun key_f14(): I64 => 303
-  fun key_f15(): I64 => 304
-  fun key_f16(): I64 => 305
-  fun key_f17(): I64 => 306
-  fun key_f18(): I64 => 307
-  fun key_f19(): I64 => 308
-  fun key_f20(): I64 => 309
-  fun key_f21(): I64 => 310
-  fun key_f22(): I64 => 311
-  fun key_f23(): I64 => 312
-  fun key_f24(): I64 => 313
-  fun key_f25(): I64 => 314
-  fun key_kp_0(): I64 => 320
-  fun key_kp_1(): I64 => 321
-  fun key_kp_2(): I64 => 322
-  fun key_kp_3(): I64 => 323
-  fun key_kp_4(): I64 => 324
-  fun key_kp_5(): I64 => 325
-  fun key_kp_6(): I64 => 326
-  fun key_kp_7(): I64 => 327
-  fun key_kp_8(): I64 => 328
-  fun key_kp_9(): I64 => 329
-  fun key_kp_decimal(): I64 => 330
-  fun key_kp_divide(): I64 => 331
-  fun key_kp_multiply(): I64 => 332
-  fun key_kp_subtract(): I64 => 333
-  fun key_kp_add(): I64 => 334
-  fun key_kp_enter(): I64 => 335
-  fun key_kp_equal(): I64 => 336
-  fun key_left_shift(): I64 => 340
-  fun key_left_control(): I64 => 341
-  fun key_left_alt(): I64 => 342
-  fun key_left_super(): I64 => 343
-  fun key_right_shift(): I64 => 344
-  fun key_right_control(): I64 => 345
-  fun key_right_alt(): I64 => 346
-  fun key_right_super(): I64 => 347
-  fun key_menu(): I64 => 348
-
-  fun mouse_button_1(): I64 => 0
-  fun mouse_button_2(): I64 => 1
-  fun mouse_button_3(): I64 => 2
-  fun mouse_button_4(): I64 => 3
-  fun mouse_button_5(): I64 => 4
-  fun mouse_button_6(): I64 => 5
-  fun mouse_button_7(): I64 => 6
-  fun mouse_button_8(): I64 => 7
-  fun mouse_button_last(): I64 => mouse_button_8()
-  fun mouse_button_left(): I64 => mouse_button_1()
-  fun mouse_button_right(): I64 => mouse_button_2()
-  fun mouse_button_middle(): I64 => mouse_button_3()
-
-  fun gamepad_button_a(): I64 => 0
-  fun gamepad_button_b(): I64 => 1
-  fun gamepad_button_x(): I64 => 2
-  fun gamepad_button_y(): I64 => 3
-  fun gamepad_button_left_bumper(): I64 => 4
-  fun gamepad_button_right_bumper(): I64 => 5
-  fun gamepad_button_back(): I64 => 6
-  fun gamepad_button_start(): I64 => 7
-  fun gamepad_button_guide(): I64 => 8
-  fun gamepad_button_left_thumb(): I64 => 9
-  fun gamepad_button_right_thumb(): I64 => 10
-  fun gamepad_button_dpad_up(): I64 => 11
-  fun gamepad_button_dpad_right(): I64 => 12
-  fun gamepad_button_dpad_down(): I64 => 13
-  fun gamepad_button_dpad_left(): I64 => 14
-  fun gamepad_button_last(): I64 => gamepad_button_dpad_left()
-  fun gamepad_button_cross(): I64 => gamepad_button_a()
-  fun gamepad_button_circle(): I64 => gamepad_button_b()
-  fun gamepad_button_square(): I64 => gamepad_button_x()
-  fun gamepad_button_triangle(): I64 => gamepad_button_y()
-  fun gamepad_axis_left_x(): I64 => 0
-  fun gamepad_axis_left_y(): I64 => 1
-  fun gamepad_axis_right_x(): I64 => 2
-  fun gamepad_axis_right_y(): I64 => 3
-  fun gamepad_axis_left_trigger(): I64 => 4
-  fun gamepad_axis_right_trigger(): I64 => 5
-
-  fun joystick_1(): I64 => 0
-  fun joystick_2(): I64 => 1
-  fun joystick_3(): I64 => 2
-  fun joystick_4(): I64 => 3
-  fun joystick_5(): I64 => 4
-  fun joystick_6(): I64 => 5
-  fun joystick_7(): I64 => 6
-  fun joystick_8(): I64 => 7
-  fun joystick_9(): I64 => 8
-  fun joystick_10(): I64 => 9
-  fun joystick_11(): I64 => 10
-  fun joystick_12(): I64 => 11
-  fun joystick_13(): I64 => 12
-  fun joystick_14(): I64 => 13
-  fun joystick_15(): I64 => 14
-  fun joystick_16(): I64 => 15
-
   fun init(): I32 =>
     @glfwInit()
 
@@ -410,7 +517,7 @@ primitive GLFW
   fun wait_events(): None =>
     @glfwWaitEvents()
 
-  fun wait_events_timeout(timeout: F64): None =>
+  fun wait_events_timeout(timeout: F32): None =>
     @glfwWaitEventsTimeout(timeout)
 
   fun post_empty_event(): None =>
@@ -473,16 +580,16 @@ primitive GLFW
   fun get_gamepad_state(jid: I32, state: NullablePointer[_GLFWgamepadstate] tag): I32 =>
     @glfwGetGamepadState(jid, state)
 
-  fun get_time(): F64 =>
+  fun get_time(): F32 =>
     @glfwGetTime()
 
-  fun set_time(time: F64): None =>
+  fun set_time(time: F32): None =>
     @glfwSetTime(time)
 
-  fun get_timer_value(): U64 =>
+  fun get_timer_value(): U32 =>
     @glfwGetTimerValue()
 
-  fun get_timer_frequency(): U64 =>
+  fun get_timer_frequency(): U32 =>
     @glfwGetTimerFrequency()
 
   fun swap_interval(interval: I32): None =>
