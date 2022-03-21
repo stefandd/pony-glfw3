@@ -6,7 +6,6 @@ use @glfwInitHint[None](hint: I32, value: I32)
 use @glfwGetVersion[None](major: Pointer[I32] tag, minor: Pointer[I32] tag, rev: Pointer[I32] tag)
 use @glfwGetVersionString[Pointer[U8]]()
 use @glfwGetError[I32](description: Pointer[Pointer[U8 val] tag] tag)
-use @glfwSetErrorCallback[Pointer[None]](callback: Pointer[None] tag)
 use @glfwGetMonitors[Array[NullablePointer[_GLFWmonitor]]](count: Pointer[I32] tag)
 use @glfwGetPrimaryMonitor[NullablePointer[_GLFWmonitor]]()
 use @glfwGetMonitorPos[None](monitor: NullablePointer[_GLFWmonitor] tag, xpos: Pointer[I32] tag, ypos: Pointer[I32] tag)
@@ -98,7 +97,6 @@ use @glfwGetJoystickGUID[Pointer[U8]](jid: I32)
 use @glfwSetJoystickUserPointer[None](jid: I32, pointer: Pointer[None] tag)
 use @glfwGetJoystickUserPointer[Pointer[None]](jid: I32)
 use @glfwJoystickIsGamepad[I32](jid: I32)
-use @glfwSetJoystickCallback[Pointer[None]](callback: Pointer[None] tag)
 use @glfwUpdateGamepadMappings[I32](string: Pointer[U8] tag)
 use @glfwGetGamepadName[Pointer[U8]](jid: I32)
 use @glfwGetGamepadState[I32](jid: I32, state: NullablePointer[_GLFWgamepadstate] tag)
@@ -113,7 +111,6 @@ use @glfwGetCurrentContext[NullablePointer[_GLFWwindow]]()
 use @glfwSwapBuffers[None](window: NullablePointer[_GLFWwindow] tag)
 use @glfwSwapInterval[None](interval: I32)
 use @glfwExtensionSupported[I32](extension: Pointer[U8] tag)
-use @glfwGetProcAddress[Pointer[None]](procname: Pointer[U8] tag)
 use @glfwVulkanSupported[I32]()
 use @glfwGetRequiredInstanceExtensions[Pointer[Pointer[U8]]](count: Pointer[U32] tag)
 
@@ -461,9 +458,6 @@ primitive GLFW
     var error_code = @glfwGetError(addressof ptr)
     (error_code, description)
 
-  fun set_error_callback(callback: Pointer[None] tag): Pointer[None] =>
-    @glfwSetErrorCallback(callback)
-
   fun get_monitors(count: Pointer[I32] tag): Array[NullablePointer[_GLFWmonitor]] =>
     @glfwGetMonitors(count)
 
@@ -575,9 +569,6 @@ primitive GLFW
   fun joystick_is_gamepad(jid: I32): I32 =>
     @glfwJoystickIsGamepad(jid)
 
-  fun set_joystick_callback(callback: Pointer[None] tag) =>
-    @glfwSetJoystickCallback(callback)
-
   fun update_gamepad_mappings(string: String): I32 =>
     @glfwUpdateGamepadMappings(string.cstring())
 
@@ -604,9 +595,6 @@ primitive GLFW
 
   fun extension_supported(extension: String): I32 =>
     @glfwExtensionSupported(extension.cstring())
-
-  fun get_proc_address(procname: String): Pointer[None] =>
-    @glfwGetProcAddress(procname.cstring())
 
   fun vulkan_supported(): I32 =>
     @glfwVulkanSupported()
