@@ -9,17 +9,21 @@ actor Main is WindowListener
     env = env'
     env.out.print("Hello Glfw3")
 
-    if (Glfw3.glfwInit() == GLFWFalse()) then
-      window = NullablePointer[GLFWwindow].none()
-      window_user_object = WindowUserObject.none()
-      env.out.print("Error: could not init glfw")
-    else
-      env.out.print("WOOT")
-      window = Glfw3.glfwCreateWindow(640, 480, "My Title", NullablePointer[GLFWmonitor].none(), NullablePointer[GLFWwindow].none())
+    if (Glfw3.glfwInit() == GLFWTrue()) then
+      env.out.print("GLFW initialized version: " + Glfw3.glfwGetVersionString())
+
+      window = Glfw3.glfwCreateWindow(640, 480, "My Title")
       window_user_object = WindowUserObject(window)
       window_user_object.set_listener(this)
       window_user_object.enable_key_callback()
+
       loop()
+    else
+      env.out.print("Error: could not init GLFW")
+      env.out.print(Glfw3Helper.get_error_description())
+
+      window = NullablePointer[GLFWwindow].none()
+      window_user_object = WindowUserObject.none()
     end
 
   be loop() =>

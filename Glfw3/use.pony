@@ -6731,7 +6731,7 @@ use @glfwGetVersionString[Pointer[U8]]()
   Arguments:
     [PointerType size=64]->[PointerType size=64]->[FundamentalType(char) size=8]
 */
-use @glfwGetError[I32](description: Pointer[Pointer[U8]] tag)
+use @glfwGetError[I32](description: Pointer[Pointer[U8 val] tag] tag)
 
 
 

@@ -535,9 +535,7 @@ primitive Glfw3
     [FundamentalType(unsigned int) size=32]
 */
   fun glGetString(name: U32): String =>
-    var pcstring: Pointer[U8] =  @glGetString(name)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glGetString(name)).clone()
 
 
 /*
@@ -6722,9 +6720,7 @@ primitive Glfw3
   Arguments:
 */
   fun glfwGetVersionString(): String =>
-    var pcstring: Pointer[U8] =  @glfwGetVersionString()
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetVersionString()).clone()
 
 
 /*
@@ -6736,7 +6732,7 @@ primitive Glfw3
   Arguments:
     [PointerType size=64]->[PointerType size=64]->[FundamentalType(char) size=8]
 */
-  fun glfwGetError(description: Pointer[Pointer[U8]] tag): I32 =>
+  fun glfwGetError(description: Pointer[Pointer[U8 val] tag] tag): I32 =>
     @glfwGetError(description)
 
 
@@ -6850,9 +6846,7 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
 */
   fun glfwGetMonitorName(monitor: NullablePointer[GLFWmonitor] tag): String =>
-    var pcstring: Pointer[U8] =  @glfwGetMonitorName(monitor)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetMonitorName(monitor)).clone()
 
 
 /*
@@ -7016,7 +7010,7 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
     [PointerType size=64]->[Struct size=,fid: f10]
 */
-  fun glfwCreateWindow(width: I32, height: I32, title: String, monitor: NullablePointer[GLFWmonitor] tag, share: NullablePointer[GLFWwindow] tag): NullablePointer[GLFWwindow] =>
+  fun glfwCreateWindow(width: I32, height: I32, title: String, monitor: NullablePointer[GLFWmonitor] tag = NullablePointer[GLFWmonitor].none(), share: NullablePointer[GLFWwindow] tag = NullablePointer[GLFWwindow].none()): NullablePointer[GLFWwindow] =>
     @glfwCreateWindow(width, height, title.cstring(), monitor, share)
 
 
@@ -7634,9 +7628,7 @@ primitive Glfw3
     [FundamentalType(int) size=32]
 */
   fun glfwGetKeyName(key: I32, scancode: I32): String =>
-    var pcstring: Pointer[U8] =  @glfwGetKeyName(key, scancode)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetKeyName(key, scancode)).clone()
 
 
 /*
@@ -7915,9 +7907,7 @@ primitive Glfw3
     [PointerType size=64]->[FundamentalType(int) size=32]
 */
   fun glfwGetJoystickButtons(jid: I32, count: Pointer[I32] tag): String =>
-    var pcstring: Pointer[U8] =  @glfwGetJoystickButtons(jid, count)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetJoystickButtons(jid, count)).clone()
 
 
 /*
@@ -7931,9 +7921,7 @@ primitive Glfw3
     [PointerType size=64]->[FundamentalType(int) size=32]
 */
   fun glfwGetJoystickHats(jid: I32, count: Pointer[I32] tag): String =>
-    var pcstring: Pointer[U8] =  @glfwGetJoystickHats(jid, count)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetJoystickHats(jid, count)).clone()
 
 
 /*
@@ -7946,9 +7934,7 @@ primitive Glfw3
     [FundamentalType(int) size=32]
 */
   fun glfwGetJoystickName(jid: I32): String =>
-    var pcstring: Pointer[U8] =  @glfwGetJoystickName(jid)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetJoystickName(jid)).clone()
 
 
 /*
@@ -7961,9 +7947,7 @@ primitive Glfw3
     [FundamentalType(int) size=32]
 */
   fun glfwGetJoystickGUID(jid: I32): String =>
-    var pcstring: Pointer[U8] =  @glfwGetJoystickGUID(jid)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetJoystickGUID(jid)).clone()
 
 
 /*
@@ -8042,9 +8026,7 @@ primitive Glfw3
     [FundamentalType(int) size=32]
 */
   fun glfwGetGamepadName(jid: I32): String =>
-    var pcstring: Pointer[U8] =  @glfwGetGamepadName(jid)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetGamepadName(jid)).clone()
 
 
 /*
@@ -8085,9 +8067,7 @@ primitive Glfw3
     [PointerType size=64]->[Struct size=,fid: f10]
 */
   fun glfwGetClipboardString(window: NullablePointer[GLFWwindow] tag): String =>
-    var pcstring: Pointer[U8] =  @glfwGetClipboardString(window)
-    let p: String iso = String.from_cstring(pcstring).clone()
-    consume p
+    String.from_cstring(@glfwGetClipboardString(window)).clone()
 
 
 /*
