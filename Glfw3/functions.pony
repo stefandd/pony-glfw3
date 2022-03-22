@@ -7408,33 +7408,6 @@ primitive Glfw3
 
 
 /*
-  Source: /nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3582
-  Original Name: glfwSetWindowUserPointer/nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3582
-
-  Return Value: [FundamentalType(void) size=0]
-
-  Arguments:
-    [PointerType size=64]->[Struct size=,fid: f10]
-    [PointerType size=64]->[FundamentalType(void) size=0]
-*/
-  fun glfwSetWindowUserPointer(window: NullablePointer[GLFWwindow] tag, pointer: Pointer[None] tag): None =>
-    @glfwSetWindowUserPointer(window, pointer)
-
-
-/*
-  Source: /nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3603
-  Original Name: glfwGetWindowUserPointer/nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3603
-
-  Return Value: [PointerType size=64]->[FundamentalType(void) size=0]
-
-  Arguments:
-    [PointerType size=64]->[Struct size=,fid: f10]
-*/
-  fun glfwGetWindowUserPointer(window: NullablePointer[GLFWwindow] tag): Pointer[None] =>
-    @glfwGetWindowUserPointer(window)
-
-
-/*
   Source: /nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3638
   Original Name: glfwSetWindowPosCallback/nix/store/rd17pyv1cc63n281wv414xkig6vwadr3-glfw-3.3.4/include/GLFW/glfw3.h:3638
 
