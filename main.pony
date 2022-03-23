@@ -17,6 +17,10 @@ actor Main is GLFWWindowListener
       window_user_object.set_listener(this)
       window_user_object.enable_key_callback()
 
+      Glfw3.glfwMakeContextCurrent(window)
+
+      // GL commands here...
+
       loop()
     else
       env.out.print("Error: could not init GLFW")
@@ -27,8 +31,16 @@ actor Main is GLFWWindowListener
     end
 
   be loop() =>
+    // Required during behavior execution because needs to happen on the thread we'll run GL commands from
+    Glfw3.glfwMakeContextCurrent(window)
+    Glfw3.glfwSwapInterval(1)
+
     if (Glfw3.glfwWindowShouldClose(window) == 0) then
+      // GL commands here...
+
+      Glfw3.glfwSwapBuffers(window)
       Glfw3.glfwPollEvents()
+
       loop()
     else
       Glfw3.glfwDestroyWindow(window)
