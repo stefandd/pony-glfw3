@@ -1,8 +1,8 @@
 use "Glfw3"
 
-actor Main is WindowListener
+actor Main is GLFWWindowListener
   let window: NullablePointer[GLFWwindow]
-  let window_user_object: WindowUserObject
+  let window_user_object: GLFWWindowUserObject
   let env: Env
 
   new create(env': Env) =>
@@ -13,7 +13,7 @@ actor Main is WindowListener
       env.out.print("GLFW initialized version: " + Glfw3.glfwGetVersionString())
 
       window = Glfw3.glfwCreateWindow(640, 480, "My Title")
-      window_user_object = WindowUserObject(window)
+      window_user_object = GLFWWindowUserObject(window)
       window_user_object.set_listener(this)
       window_user_object.enable_key_callback()
 
@@ -23,7 +23,7 @@ actor Main is WindowListener
       env.out.print(Glfw3Helper.get_error_description())
 
       window = NullablePointer[GLFWwindow].none()
-      window_user_object = WindowUserObject.none()
+      window_user_object = GLFWWindowUserObject.none()
     end
 
   be loop() =>

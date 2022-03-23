@@ -1,6 +1,6 @@
-class WindowUserObject
+class GLFWWindowUserObject
   let _window : NullablePointer[GLFWwindow] tag
-  var _listener: WindowListener box = DefaultWindowListener
+  var _listener: GLFWWindowListener box = DefaultGLFWWindowListener
 
   new create(window: NullablePointer[GLFWwindow] tag) =>
     _window = window
@@ -9,7 +9,7 @@ class WindowUserObject
   new none() =>
     _window = NullablePointer[GLFWwindow].none()
 
-  fun ref set_listener(listener: WindowListener box) =>
+  fun ref set_listener(listener: GLFWWindowListener box) =>
     _listener = listener
 
   fun enable_key_callback() =>
@@ -18,59 +18,59 @@ class WindowUserObject
   fun @_keyCallback(window: NullablePointer[GLFWwindow] tag, key: I32 val, scancode: I32 val, action: I32 val, mods: I32 val) =>
     @glfwGetWindowUserPointer(window)._listener.key_callback(key, scancode, action, mods)
 
-  fun enable_pos_callback() =>
+  fun enable_window_pos_callback() =>
     @glfwSetWindowPosCallback(_window, addressof _windowPosCallback)
 
   fun @_windowPosCallback(window: NullablePointer[GLFWwindow] tag, xpos: I32 val, ypos: I32 val) =>
-    @glfwGetWindowUserPointer(window)._listener.pos_callback(xpos, ypos)
+    @glfwGetWindowUserPointer(window)._listener.window_pos_callback(xpos, ypos)
 
-  fun enable_size_callback() =>
+  fun enable_window_size_callback() =>
     @glfwSetWindowSizeCallback(_window, addressof _windowSizeCallback)
 
   fun @_windowSizeCallback(window: NullablePointer[GLFWwindow] tag, width: I32 val, height: I32 val) =>
-    @glfwGetWindowUserPointer(window)._listener.size_callback(width, height)
+    @glfwGetWindowUserPointer(window)._listener.window_size_callback(width, height)
 
-  fun enable_close_callback() =>
+  fun enable_window_close_callback() =>
     @glfwSetWindowCloseCallback(_window, addressof _windowCloseCallback)
 
   fun @_windowCloseCallback(window: NullablePointer[GLFWwindow] tag) =>
-    @glfwGetWindowUserPointer(window)._listener.close_callback()
+    @glfwGetWindowUserPointer(window)._listener.window_close_callback()
 
-  fun enable_refresh_callback() =>
+  fun enable_window_refresh_callback() =>
     @glfwSetWindowRefreshCallback(_window, addressof _windowRefreshCallback)
 
   fun @_windowRefreshCallback(window: NullablePointer[GLFWwindow] tag) =>
-    @glfwGetWindowUserPointer(window)._listener.refresh_callback()
+    @glfwGetWindowUserPointer(window)._listener.window_refresh_callback()
 
-  fun enable_focus_callback() =>
+  fun enable_window_focus_callback() =>
     @glfwSetWindowFocusCallback(_window, addressof _windowFocusCallback)
 
   fun @_windowFocusCallback(window: NullablePointer[GLFWwindow] tag, focused: I32) =>
-    @glfwGetWindowUserPointer(window)._listener.focus_callback(focused)
+    @glfwGetWindowUserPointer(window)._listener.window_focus_callback(focused)
 
-  fun enable_iconify_callback() =>
+  fun enable_window_iconify_callback() =>
     @glfwSetWindowIconifyCallback(_window, addressof _windowIconifyCallback)
 
   fun @_windowIconifyCallback(window: NullablePointer[GLFWwindow] tag, iconified: I32) =>
-    @glfwGetWindowUserPointer(window)._listener.iconify_callback(iconified)
+    @glfwGetWindowUserPointer(window)._listener.window_iconify_callback(iconified)
 
-  fun enable_maximize_callback() =>
+  fun enable_window_maximize_callback() =>
     @glfwSetWindowMaximizeCallback(_window, addressof _windowMaximizeCallback)
 
   fun @_windowMaximizeCallback(window: NullablePointer[GLFWwindow] tag, maximized: I32) =>
-    @glfwGetWindowUserPointer(window)._listener.maximize_callback(maximized)
+    @glfwGetWindowUserPointer(window)._listener.window_maximize_callback(maximized)
+
+  fun enable_window_content_scale_callback() =>
+    @glfwSetWindowContentScaleCallback(_window, addressof _windowContentScaleCallback)
+
+  fun @_windowContentScaleCallback(window: NullablePointer[GLFWwindow] tag, xscale: F32, yscale: F32) =>
+    @glfwGetWindowUserPointer(window)._listener.window_content_scale_callback(xscale, yscale)
 
   fun enable_framebuffer_size_callback() =>
     @glfwSetFramebufferSizeCallback(_window, addressof _framebufferSizeCallback)
 
   fun @_framebufferSizeCallback(window: NullablePointer[GLFWwindow] tag, width: I32, height: I32) =>
     @glfwGetWindowUserPointer(window)._listener.framebuffer_size_callback(width, height)
-
-  fun enable_content_scale_callback() =>
-    @glfwSetWindowContentScaleCallback(_window, addressof _windowContentScaleCallback)
-
-  fun @_windowContentScaleCallback(window: NullablePointer[GLFWwindow] tag, xscale: F32, yscale: F32) =>
-    @glfwGetWindowUserPointer(window)._listener.content_scale_callback(xscale, yscale)
 
   fun enable_char_callback() =>
     @glfwSetCharCallback(_window, addressof _charCallback)
