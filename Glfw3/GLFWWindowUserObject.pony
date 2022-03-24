@@ -1,6 +1,6 @@
 class GLFWWindowUserObject
   let _window : NullablePointer[GLFWwindow] tag
-  var _listener: GLFWWindowListener box = DefaultGLFWWindowListener
+  var _listener: GLFWWindowListener = DefaultGLFWWindowListener
 
   new create(window: NullablePointer[GLFWwindow] tag) =>
     _window = window
@@ -9,7 +9,7 @@ class GLFWWindowUserObject
   new none() =>
     _window = NullablePointer[GLFWwindow].none()
 
-  fun ref set_listener(listener: GLFWWindowListener box) =>
+  fun ref set_listener(listener: GLFWWindowListener) =>
     _listener = listener
 
   fun enable_key_callback() =>
