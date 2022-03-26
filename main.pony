@@ -30,24 +30,25 @@ actor Main is GLFWWindowListener
       window_user_object = GLFWWindowUserObject.none()
     end
 
+  fun _final() =>
+    Glfw3.glfwDestroyWindow(window)
+    Glfw3.glfwTerminate()
+
   be loop() =>
     // Required during behavior execution because needs to happen on the thread we'll run GL commands from
     Glfw3.glfwMakeContextCurrent(window)
     Glfw3.glfwSwapInterval(1)
 
-    if (Glfw3.glfwWindowShouldClose(window) == 0) then
-      // GL commands here...
+    // GL commands here...
 
-      Glfw3.glfwSwapBuffers(window)
-      Glfw3.glfwPollEvents()
+    Glfw3.glfwSwapBuffers(window)
+    Glfw3.glfwPollEvents()
 
+    if (Glfw3.glfwWindowShouldClose(window) == GLFWFalse()) then
       loop()
-    else
-      Glfw3.glfwDestroyWindow(window)
-      Glfw3.glfwTerminate()
     end
 
-  fun key_callback(key: I32 val, scancode: I32 val, action: I32 val, mods: I32 val) =>
+  fun key_callback(key: I32, scancode: I32, action: I32, mods: I32) =>
     match key
     | GLFWKeyEscape()
     | GLFWKeyQ() => Glfw3.glfwSetWindowShouldClose(window, GLFWTrue())
