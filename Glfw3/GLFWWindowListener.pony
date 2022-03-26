@@ -12,7 +12,7 @@ interface GLFWWindowListener
   fun ref char_callback(codepoint: U32) => None
   fun ref char_mods_callback(codepoint: U32, mods: I32) => None
   fun ref mouse_button_callback(button: I32, action: I32, mods: I32) => None
-  fun ref cursor_pos_callback(xpos: F32, ypos: F32) => None
+  fun ref cursor_pos_callback(xpos: F64, ypos: F64) => None
   fun ref cursor_enter_callback(entered: I32) => None
   fun ref scroll_callback(xoffset: F32, yoffset: F32) => None
   fun ref drop_callback(path_count: I32, paths: String) => None

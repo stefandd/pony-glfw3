@@ -93,7 +93,7 @@ class GLFWWindowUserObject
   fun enable_cursor_pos_callback() =>
     @glfwSetCursorPosCallback(_window, addressof _cursorPosCallback)
 
-  fun @_cursorPosCallback(window: NullablePointer[GLFWwindow] tag, xpos: F32, ypos: F32) =>
+  fun @_cursorPosCallback(window: NullablePointer[GLFWwindow] tag, xpos: F64, ypos: F64) =>
     @glfwGetWindowUserPointer(window)._listener.cursor_pos_callback(xpos, ypos)
 
   fun enable_cursor_enter_callback() =>
