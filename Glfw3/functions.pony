@@ -101,7 +101,7 @@ primitive Glfw3
   Arguments:
     [PointerType size=64]->[FundamentalType(int) size=32]
 */
-  fun glfwGetMonitors(count: Pointer[I32] tag): Array[NullablePointer[GLFWmonitor]] =>
+  fun glfwGetMonitors(count: Pointer[I32] tag = Pointer[I32]): Array[NullablePointer[GLFWmonitor]] =>
     @glfwGetMonitors(count)
 
 
