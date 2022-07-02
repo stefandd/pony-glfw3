@@ -6,6 +6,9 @@ class GLFWWindowUserObject
     _window = window
     @glfwSetWindowUserPointer(_window, this)
 
+  new none() =>
+    _window = NullablePointer[GLFWwindow].none()
+
   fun ref set_listener(listener: GLFWWindowListener) =>
     _listener = listener
 
