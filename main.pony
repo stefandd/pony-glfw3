@@ -27,7 +27,7 @@ actor Main is GLFWWindowListener
       env.out.print(Glfw3Helper.get_error_description())
 
       window = NullablePointer[GLFWwindow].none()
-      window_user_object = GLFWWindowUserObject.none()
+      window_user_object = GLFWWindowUserObject(window)
     end
 
   fun _final() =>
